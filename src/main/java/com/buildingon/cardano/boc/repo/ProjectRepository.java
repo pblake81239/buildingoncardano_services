@@ -10,13 +10,13 @@ import com.buildingon.cardano.boc.dto.Project;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 	
-    @Query("SELECT count(*) FROM projects")
+    @Query("SELECT count(*) FROM Project p")
     public int totalProjects();
     
-    @Query("SELECT count(*) FROM projects p WHERE u.type = ?1")
+    @Query("SELECT count(*) FROM Project p WHERE p.type = ?1")
     public int totalProjectsByType(String type);
     
-    @Query("SELECT distinct(type) FROM projects")
+    @Query("SELECT distinct(p.type) FROM Project p")
     public List<String> projectTypes();
 
 }
