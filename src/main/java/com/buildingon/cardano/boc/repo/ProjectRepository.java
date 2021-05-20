@@ -16,6 +16,10 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("SELECT count(*) FROM Project p WHERE p.type = ?1")
     public int totalProjectsByType(String type);
     
+    @Query("SELECT p FROM Project p WHERE LOWER(p.type) = LOWER(?1)")
+    public List<Project> projectsByType(String type);
+    
+    
     @Query("SELECT distinct(p.type) FROM Project p")
     public List<String> projectTypes();
 

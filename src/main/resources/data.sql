@@ -15,5 +15,12 @@ CREATE TABLE projects (
   type VARCHAR(250) NOT NULL,
   token_type VARCHAR(250) NOT NULL,
   ticker VARCHAR(250) DEFAULT NULL,
-  stage VARCHAR(250) NOT NULL
+  stage VARCHAR(250) NOT NULL,
+  description VARCHAR(250) NOT NULL,
+  homepage VARCHAR(250) NOT NULL,
+  twitter_handle VARCHAR(250) NOT NULL,
+  telegram_handle VARCHAR(250) NOT NULL,
+  youtube_handle VARCHAR(250) NOT NULL,
+  facebook_handle VARCHAR(250) NOT NULL,
+  discord_handle VARCHAR(250) NOT NULL
 );

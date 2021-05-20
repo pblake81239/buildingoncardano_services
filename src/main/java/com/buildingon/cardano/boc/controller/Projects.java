@@ -33,6 +33,11 @@ public class Projects {
 		return projectRepo.findAll();
 	}
 
+	@GetMapping("/type/{projectType}")
+	public List<Project> getAllProjects(@PathVariable String projectType) {
+		return projectRepo.projectsByType(projectType);
+	}
+	
 	@GetMapping(path = "/details/{projectId}")
 	public Optional<Project> getProjectDetails(@PathVariable String projectId) {
 		return projectRepo.findById(Long.valueOf(projectId));
