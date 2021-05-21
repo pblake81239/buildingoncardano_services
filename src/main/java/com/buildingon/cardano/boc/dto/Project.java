@@ -46,6 +46,9 @@ public class Project {
     @Column(name = "discord_handle")
     private String discordHandle;
     
+    @Column(name = "image_url")
+    private String imageUrl;
+    
 	public Long getId() {
 		return id;
 	}
@@ -148,7 +151,16 @@ public class Project {
 
 	public void setDiscordHandle(String discordHandle) {
 		this.discordHandle = discordHandle;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	} 	
+	
 	
 	
 }
