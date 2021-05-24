@@ -64,7 +64,7 @@ public class Projects {
 		return projectRepo.projectsByType(projectType.toLowerCase());
 	}
 
-	@GetMapping("/owner/{owneremail}")
+	@GetMapping("/owner/{ownerEmail}")
 	public List<Project> getProjectsByOwnerEmail(@PathVariable String ownerEmail) {
 		return projectRepo.projectsByOwner(ownerEmail);
 	}
