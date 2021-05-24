@@ -49,6 +49,9 @@ public class Project {
     @Column(name = "image_url")
     private String imageUrl;
     
+    @Column(name = "owner_email")
+    private String ownerEmail;
+    
 	public Long getId() {
 		return id;
 	}
@@ -159,8 +162,13 @@ public class Project {
 
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
+	}
+
+	public String getOwnerEmail() {
+		return ownerEmail;
+	}
+
+	public void setOwnerEmail(String ownerEmail) {
+		this.ownerEmail = ownerEmail;
 	} 	
-	
-	
-	
 }
