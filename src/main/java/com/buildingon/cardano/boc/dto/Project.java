@@ -15,26 +15,34 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
      
-    @Column(nullable = false, unique = true, length = 45)
+    @Column(nullable = false, unique = true)
     private String name;
      
-    @Column(nullable = false, length = 64)
-    private String type;
-     
-    @Column(name = "token_type", nullable = false, length = 20)
-    private String tokenType;
-     
-    @Column(name = "ticker", nullable = false, length = 20)
+    @Column(nullable = false)
+    private String type;//tags
+          
+    @Column(name = "ticker")
     private String ticker;
 
-    @Column(name = "stage", nullable = false, length = 20)
+    @Column(name = "stage", nullable = false)
     private String stage;
     
     @Column(name = "description", length = 256)
     private String description;
+    @Column(name = "short_description", length = 256)
+    private String shortDescription;
     
+     
     @Column(name = "homepage")
     private String homepage;
+    
+    @Column(name = "whitepaper_url")
+    private String whitepaperUrl;
+    
+    @Column(name = "youtube_embed_id")
+    private String youTubeEmbedId;
+    
+    
     @Column(name = "twitter_handle")
     private String twitterHandle;
     @Column(name = "telegram_handle")
@@ -52,6 +60,18 @@ public class Project {
     @Column(name = "owner_email")
     private String ownerEmail;
     
+    @Column(name = "token_type")
+    private String tokenType;
+    @Column(name = "total_supply")
+    private String totalSupply;
+    @Column(name = "circulating_supply")
+    private String circulatingSupply;
+    @Column(name = "token_distribution_link")
+    private String tokenDistributionLink;
+    
+    @Column(name = "sale_details_link")
+    private String saleDetailsLink;
+
 	public Long getId() {
 		return id;
 	}
@@ -74,14 +94,6 @@ public class Project {
 
 	public void setType(String type) {
 		this.type = type;
-	}
-
-	public String getTokenType() {
-		return tokenType;
-	}
-
-	public void setTokenType(String tokenType) {
-		this.tokenType = tokenType;
 	}
 
 	public String getTicker() {
@@ -108,12 +120,36 @@ public class Project {
 		this.description = description;
 	}
 
+	public String getShortDescription() {
+		return shortDescription;
+	}
+
+	public void setShortDescription(String shortDescription) {
+		this.shortDescription = shortDescription;
+	}
+
 	public String getHomepage() {
 		return homepage;
 	}
 
 	public void setHomepage(String homepage) {
 		this.homepage = homepage;
+	}
+
+	public String getWhitepaperUrl() {
+		return whitepaperUrl;
+	}
+
+	public void setWhitepaperUrl(String whitepaperUrl) {
+		this.whitepaperUrl = whitepaperUrl;
+	}
+
+	public String getYouTubeEmbedId() {
+		return youTubeEmbedId;
+	}
+
+	public void setYouTubeEmbedId(String youTubeEmbedId) {
+		this.youTubeEmbedId = youTubeEmbedId;
 	}
 
 	public String getTwitterHandle() {
@@ -170,5 +206,48 @@ public class Project {
 
 	public void setOwnerEmail(String ownerEmail) {
 		this.ownerEmail = ownerEmail;
-	} 	
+	}
+
+	public String getTokenType() {
+		return tokenType;
+	}
+
+	public void setTokenType(String tokenType) {
+		this.tokenType = tokenType;
+	}
+
+	public String getTotalSupply() {
+		return totalSupply;
+	}
+
+	public void setTotalSupply(String totalSupply) {
+		this.totalSupply = totalSupply;
+	}
+
+	public String getCirculatingSupply() {
+		return circulatingSupply;
+	}
+
+	public void setCirculatingSupply(String circulatingSupply) {
+		this.circulatingSupply = circulatingSupply;
+	}
+
+	public String getTokenDistributionLink() {
+		return tokenDistributionLink;
+	}
+
+	public void setTokenDistributionLink(String tokenDistributionLink) {
+		this.tokenDistributionLink = tokenDistributionLink;
+	}
+
+	public String getSaleDetailsLink() {
+		return saleDetailsLink;
+	}
+
+	public void setSaleDetailsLink(String saleDetailsLink) {
+		this.saleDetailsLink = saleDetailsLink;
+	}
+    
+    
+	
 }
