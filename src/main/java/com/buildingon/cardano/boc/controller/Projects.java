@@ -53,6 +53,26 @@ public class Projects {
 			return ResponseEntity.ok(json);
 		}
 	}
+	
+	@PostMapping("/update")
+	public ResponseEntity<JsonNode> updateProject(@RequestBody Project project,
+			@RequestHeader("password") String pass) throws JsonMappingException, JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+		User user = new User();
+		user.setEmail(project.getOwnerEmail());
+		user.setPassword(pass);
+
+		User valiUser = userService.validateUser(user);
+
+		if (valiUser != null) {
+			projectRepo.save(project);
+			JsonNode json = mapper.readTree("{\"response\": \"updated\" }");
+			return ResponseEntity.ok(json);
+		} else {
+			JsonNode json = mapper.readTree("{\"response\": \"invalidUser\" }");
+			return ResponseEntity.ok(json);
+		}
+	}
 
 	@GetMapping("/all")
 	public List<Project> getAllProjects() {
