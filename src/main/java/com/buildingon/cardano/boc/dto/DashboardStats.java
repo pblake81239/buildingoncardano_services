@@ -6,19 +6,22 @@ import java.util.List;
 public class DashboardStats {
 	
 	private int totalProjects;
-	private HashMap<String, Integer> projectTypesAndCount;
+	private List<DashboardStatProject> projectTypesAndCount;
+	
 	public int getTotalProjects() {
 		return totalProjects;
 	}
 	public void setTotalProjects(int totalProjects) {
 		this.totalProjects = totalProjects;
 	}
-	public HashMap<String, Integer> getProjectTypesAndCount() {
+	public List<DashboardStatProject> getProjectTypesAndCount() {
 		return projectTypesAndCount;
 	}
-	public void setProjectTypesAndCount(HashMap<String, Integer> projectTypesAndCount) {
+	public void setProjectTypesAndCount(List<DashboardStatProject> projectTypesAndCount) {
 		this.projectTypesAndCount = projectTypesAndCount;
 	}
+
+	
 
 	
 	

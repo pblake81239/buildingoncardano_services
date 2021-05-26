@@ -1,5 +1,7 @@
 package com.buildingon.cardano.boc.controller;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.buildingon.cardano.boc.dto.DashboardStatProject;
 import com.buildingon.cardano.boc.dto.DashboardStats;
 import com.buildingon.cardano.boc.dto.Project;
 import com.buildingon.cardano.boc.dto.User;
@@ -37,6 +40,9 @@ public class Projects {
 	@PostMapping("/create")
 	public ResponseEntity<JsonNode> createProject(@RequestBody Project project,
 			@RequestHeader("password") String pass) throws JsonMappingException, JsonProcessingException {
+		project.setCreatedDate(new Date());
+		project.setUpdatedDate(new Date());
+		
 		ObjectMapper mapper = new ObjectMapper();
 		User user = new User();
 		user.setEmail(project.getOwnerEmail());
@@ -57,6 +63,9 @@ public class Projects {
 	@PostMapping("/update")
 	public ResponseEntity<JsonNode> updateProject(@RequestBody Project project,
 			@RequestHeader("password") String pass) throws JsonMappingException, JsonProcessingException {
+		
+		project.setUpdatedDate(new Date());
+		
 		ObjectMapper mapper = new ObjectMapper();
 		User user = new User();
 		user.setEmail(project.getOwnerEmail());
@@ -76,7 +85,7 @@ public class Projects {
 
 	@GetMapping("/all")
 	public List<Project> getAllProjects() {
-		return projectRepo.findAll();
+		return projectRepo.allProjectsOrderedByDateCreated();
 	}
 
 	@GetMapping("/type/{projectType}")
@@ -101,15 +110,27 @@ public class Projects {
 
 		dashboardStats.setTotalProjects(projectRepo.totalProjects());
 
-		HashMap<String, Integer> projectStats = new HashMap<>();
-
-		List<String> projectTypes = projectRepo.projectTypes();
+		List<DashboardStatProject> dashStats = new ArrayList<>();
+		
+		List<String> projectTypes = new ArrayList<>();
+		  projectTypes.add("Defi");
+		  projectTypes.add("Application");
+		  projectTypes.add("Tooling");
+		  projectTypes.add("Wallet");
+		  projectTypes.add("Data");
+		  projectTypes.add("Nft");
+		  
 		for (String type : projectTypes) {
-			int count = projectRepo.totalProjectsByType(type);
-			projectStats.put(type, count);
+			DashboardStatProject dashboardStatProject = new DashboardStatProject();
+			dashboardStatProject.setProjectType(type);
+
+			int count = projectRepo.totalProjectsByType(type.toLowerCase());
+			dashboardStatProject.setProjectCount(count);
+			
+			dashStats.add(dashboardStatProject);
 		}
 
-		dashboardStats.setProjectTypesAndCount(projectStats);
+		dashboardStats.setProjectTypesAndCount(dashStats);
 
 		return dashboardStats;
 	}
