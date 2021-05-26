@@ -12,91 +12,75 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "projects")
 public class Project {
-	
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-     
-    @Column(nullable = false, unique = true)
-    private String name;
-     
-    @Column(nullable = false)
-    private String type;//tags
-          
-    @Column(name = "ticker")
-    private String ticker;
 
-    @Column(name = "stage", nullable = false)
-    private String stage;
-    
-    @Column(name = "description", length = 256)
-    private String description;
-    @Column(name = "short_description", length = 256)
-    private String shortDescription;
-    
-     
-    @Column(name = "homepage")
-    private String homepage;
-    
-    @Column(name = "whitepaper_url")
-    private String whitepaperUrl;
-    
-    @Column(name = "youtube_embed_id")
-    private String youTubeEmbedId;
-    
-    
-    @Column(name = "twitter_handle")
-    private String twitterHandle;
-    @Column(name = "telegram_handle")
-    private String telegramHandle;
-    @Column(name = "youtube_handle")
-    private String youtubeHandle;
-    @Column(name = "facebook_handle")
-    private String facebookHandle;
-    @Column(name = "discord_handle")
-    private String discordHandle;
-    
-    @Column(name = "image_url")
-    private String imageUrl;
-    
-    @Column(name = "owner_email")
-    private String ownerEmail;
-    
-    @Column(name = "token_type")
-    private String tokenType;
-    @Column(name = "total_supply")
-    private String totalSupply;
-    @Column(name = "circulating_supply")
-    private String circulatingSupply;
-    @Column(name = "token_distribution_link")
-    private String tokenDistributionLink;
-    
-    @Column(name = "sale_details_link")
-    private String saleDetailsLink;
-    
-    
-    @Column(name = "created_date")
-    private Date createdDate;
-    @Column(name = "updated_date")
-    private Date updatedDate;
-    
-    
-    
-	public Date getCreatedDate() {
-		return createdDate;
-	}
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+	@Column(nullable = false, unique = true)
+	private String name;
 
-	public Date getUpdatedDate() {
-		return updatedDate;
-	}
+	@Column(nullable = false)
+	private String type;// tags
 
-	public void setUpdatedDate(Date updatedDate) {
-		this.updatedDate = updatedDate;
-	}
+	@Column(name = "ticker")
+	private String ticker;
+
+	@Column(name = "stage", nullable = false)
+	private String stage;
+
+	@Column(name = "description", length = 256)
+	private String description;
+	@Column(name = "short_description", length = 256)
+	private String shortDescription;
+
+	@Column(name = "homepage")
+	private String homepage;
+
+	@Column(name = "whitepaper_url")
+	private String whitepaperUrl;
+
+	@Column(name = "youtube_embed_id")
+	private String youTubeEmbedId;
+
+	@Column(name = "twitter_handle")
+	private String twitterHandle;
+	@Column(name = "telegram_handle")
+	private String telegramHandle;
+	@Column(name = "youtube_handle")
+	private String youtubeHandle;
+	@Column(name = "facebook_handle")
+	private String facebookHandle;
+	@Column(name = "discord_handle")
+	private String discordHandle;
+	@Column(name = "github_link")
+	private String githubLink;
+
+	@Column(name = "image_url")
+	private String imageUrl;
+
+	@Column(name = "owner_email")
+	private String ownerEmail;
+
+	@Column(name = "token_type")
+	private String tokenType;
+	@Column(name = "total_supply")
+	private String totalSupply;
+	@Column(name = "circulating_supply")
+	private String circulatingSupply;
+	@Column(name = "token_distribution_link")
+	private String tokenDistributionLink;
+
+	@Column(name = "sale_details_link")
+	private String saleDetailsLink;
+
+	@Column(name = "created_date")
+	private Date createdDate;
+	@Column(name = "updated_date")
+	private Date updatedDate;
+
+	@Column(name = "verified")
+	private String verified;
 
 	public Long getId() {
 		return id;
@@ -218,6 +202,14 @@ public class Project {
 		this.discordHandle = discordHandle;
 	}
 
+	public String getGithubLink() {
+		return githubLink;
+	}
+
+	public void setGithubLink(String githubLink) {
+		this.githubLink = githubLink;
+	}
+
 	public String getImageUrl() {
 		return imageUrl;
 	}
@@ -273,7 +265,30 @@ public class Project {
 	public void setSaleDetailsLink(String saleDetailsLink) {
 		this.saleDetailsLink = saleDetailsLink;
 	}
-    
-    
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	public String getVerified() {
+		return verified;
+	}
+
+	public void setVerified(String verified) {
+		this.verified = verified;
+	}
+
 	
 }

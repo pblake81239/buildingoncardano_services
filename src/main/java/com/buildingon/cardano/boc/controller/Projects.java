@@ -85,7 +85,7 @@ public class Projects {
 
 	@GetMapping("/all")
 	public List<Project> getAllProjects() {
-		return projectRepo.allProjectsOrderedByDateCreated();
+		return projectRepo.allProjectsOrderedByDateCreated("true");
 	}
 
 	@GetMapping("/type/{projectType}")
@@ -119,6 +119,7 @@ public class Projects {
 		  projectTypes.add("Wallet");
 		  projectTypes.add("Data");
 		  projectTypes.add("Nft");
+		  projectTypes.add("Dex");
 		  
 		for (String type : projectTypes) {
 			DashboardStatProject dashboardStatProject = new DashboardStatProject();

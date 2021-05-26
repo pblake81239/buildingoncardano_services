@@ -10,8 +10,8 @@ import com.buildingon.cardano.boc.dto.Project;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 	
-    @Query("SELECT p FROM Project p ORDER by p.updatedDate")
-    public List<Project> allProjectsOrderedByDateCreated();
+    @Query("SELECT p FROM Project p where p.verified = ?1 ORDER by p.updatedDate")
+    public List<Project> allProjectsOrderedByDateCreated(String verified);
 	
     @Query("SELECT count(*) FROM Project p")
     public int totalProjects();
