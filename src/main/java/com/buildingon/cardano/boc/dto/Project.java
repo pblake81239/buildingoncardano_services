@@ -81,6 +81,27 @@ public class Project {
 
 	@Column(name = "verified")
 	private String verified;
+	
+	@Column(name = "upcoming_sale")
+	private String upcomingSale;
+	@Column(name = "sale_start_date")
+	private String saleStartDate;
+	
+	public String getUpcomingSale() {
+		return upcomingSale;
+	}
+
+	public void setUpcomingSale(String upcomingSale) {
+		this.upcomingSale = upcomingSale;
+	}
+
+	public String getSaleStartDate() {
+		return saleStartDate;
+	}
+
+	public void setSaleStartDate(String saleStartDate) {
+		this.saleStartDate = saleStartDate;
+	}
 
 	public Long getId() {
 		return id;
