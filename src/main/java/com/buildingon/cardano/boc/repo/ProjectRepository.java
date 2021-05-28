@@ -25,6 +25,9 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("SELECT p FROM Project p WHERE LOWER(p.ownerEmail) = LOWER(?1)")
     public List<Project> projectsByOwner(String ownerEmail);
     
+    @Query("SELECT p FROM Project p WHERE LOWER(p.name) = LOWER(?1)")
+    public Project projectsByName(String name);
+    
     
     @Query("SELECT distinct(p.type) FROM Project p")
     public List<String> projectTypes();

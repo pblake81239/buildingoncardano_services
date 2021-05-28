@@ -103,6 +103,11 @@ public class Projects {
 		return projectRepo.findById(Long.valueOf(projectId));
 	}
 
+	@GetMapping(path = "/details/name/{name}")
+	public Optional<Project> getProjectDetailsByName(@PathVariable String name) {
+		return Optional.ofNullable(projectRepo.projectsByName(name));
+	}
+	
 	@GetMapping(path = "/stats")
 	public DashboardStats getProjectsStats() {
 
