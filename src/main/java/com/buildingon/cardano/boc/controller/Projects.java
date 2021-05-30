@@ -21,6 +21,7 @@ import com.buildingon.cardano.boc.dto.DashboardStats;
 import com.buildingon.cardano.boc.dto.Project;
 import com.buildingon.cardano.boc.dto.User;
 import com.buildingon.cardano.boc.repo.ProjectRepository;
+import com.buildingon.cardano.boc.service.ProjectService;
 import com.buildingon.cardano.boc.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -36,6 +37,9 @@ public class Projects {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	ProjectService projectService;
 
 	@PostMapping("/create")
 	public ResponseEntity<JsonNode> createProject(@RequestBody Project project,
@@ -105,7 +109,7 @@ public class Projects {
 
 	@GetMapping(path = "/details/name/{name}")
 	public Optional<Project> getProjectDetailsByName(@PathVariable String name) {
-		return Optional.ofNullable(projectRepo.projectsByName(name));
+		return Optional.ofNullable(projectService.projectsByName(name));
 	}
 	
 	@GetMapping(path = "/stats")

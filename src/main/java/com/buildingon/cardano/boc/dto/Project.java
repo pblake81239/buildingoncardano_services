@@ -1,17 +1,26 @@
 package com.buildingon.cardano.boc.dto;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "projects")
-public class Project {
+public class Project implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -85,23 +94,21 @@ public class Project {
 	@Column(name = "upcoming_sale")
 	private String upcomingSale;
 	@Column(name = "sale_start_date")
-	private String saleStartDate;
+	private Date saleStartDate;
+	@Column(name = "sale_end_date")
+	private Date saleEndDate;
+	@Column(name = "sale_detail_link")
+	private String saleDetailLink;
+	@Column(name = "sale_token_price")
+	private String saleTokenPrice;
+	@Column(name = "token_distribution_detail")
+	private String tokenDistributionDetail;
+	@Column(name = "accepted_funding")
+	private String acceptedFunding;
 	
-	public String getUpcomingSale() {
-		return upcomingSale;
-	}
-
-	public void setUpcomingSale(String upcomingSale) {
-		this.upcomingSale = upcomingSale;
-	}
-
-	public String getSaleStartDate() {
-		return saleStartDate;
-	}
-
-	public void setSaleStartDate(String saleStartDate) {
-		this.saleStartDate = saleStartDate;
-	}
+	@OneToMany(targetEntity=ProjectTeam.class, cascade = CascadeType.ALL)    
+	@JoinColumn(name ="project_name", referencedColumnName = "name")
+	private List<ProjectTeam> projectTeam;
 
 	public Long getId() {
 		return id;
@@ -311,5 +318,73 @@ public class Project {
 		this.verified = verified;
 	}
 
+	public String getUpcomingSale() {
+		return upcomingSale;
+	}
+
+	public void setUpcomingSale(String upcomingSale) {
+		this.upcomingSale = upcomingSale;
+	}
+
+	public Date getSaleStartDate() {
+		return saleStartDate;
+	}
+
+	public void setSaleStartDate(Date saleStartDate) {
+		this.saleStartDate = saleStartDate;
+	}
+
+	public Date getSaleEndDate() {
+		return saleEndDate;
+	}
+
+	public void setSaleEndDate(Date saleEndDate) {
+		this.saleEndDate = saleEndDate;
+	}
+
+	public String getSaleDetailLink() {
+		return saleDetailLink;
+	}
+
+	public void setSaleDetailLink(String saleDetailLink) {
+		this.saleDetailLink = saleDetailLink;
+	}
+
+	public String getSaleTokenPrice() {
+		return saleTokenPrice;
+	}
+
+	public void setSaleTokenPrice(String saleTokenPrice) {
+		this.saleTokenPrice = saleTokenPrice;
+	}
+
+	public String getTokenDistributionDetail() {
+		return tokenDistributionDetail;
+	}
+
+	public void setTokenDistributionDetail(String tokenDistributionDetail) {
+		this.tokenDistributionDetail = tokenDistributionDetail;
+	}
+
+	public String getAcceptedFunding() {
+		return acceptedFunding;
+	}
+
+	public void setAcceptedFunding(String acceptedFunding) {
+		this.acceptedFunding = acceptedFunding;
+	}
+
+	public List<ProjectTeam> getProjectTeam() {
+		return projectTeam;
+	}
+
+	public void setProjectTeam(List<ProjectTeam> projectTeam) {
+		this.projectTeam = projectTeam;
+	}
+
+	
+
+	
+	
 	
 }
