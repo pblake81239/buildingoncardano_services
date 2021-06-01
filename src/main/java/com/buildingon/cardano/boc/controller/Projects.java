@@ -122,6 +122,8 @@ public class Projects {
 
 		DashboardStats dashboardStats = new DashboardStats();
 
+		projectRepo.totalProjects();
+		
 		dashboardStats.setTotalProjects(projectRepo.totalProjects());
 
 		List<DashboardStatProject> dashStats = new ArrayList<>();
