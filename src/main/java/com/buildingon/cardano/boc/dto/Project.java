@@ -80,9 +80,8 @@ public class Project implements Serializable{
 	@Column(name = "token_distribution_link")
 	private String tokenDistributionLink;
 
-	@Column(name = "sale_details_link")
-	private String saleDetailsLink;
-
+	@Column(name = "release_date")
+	private String releaseDate;
 	@Column(name = "created_date")
 	private Date createdDate;
 	@Column(name = "updated_date")
@@ -90,25 +89,14 @@ public class Project implements Serializable{
 
 	@Column(name = "verified")
 	private String verified;
-	
-	@Column(name = "upcoming_sale")
-	private String upcomingSale;
-	@Column(name = "sale_start_date")
-	private Date saleStartDate;
-	@Column(name = "sale_end_date")
-	private Date saleEndDate;
-	@Column(name = "sale_detail_link")
-	private String saleDetailLink;
-	@Column(name = "sale_token_price")
-	private String saleTokenPrice;
-	@Column(name = "token_distribution_detail")
-	private String tokenDistributionDetail;
-	@Column(name = "accepted_funding")
-	private String acceptedFunding;
-	
+		
 	@OneToMany(targetEntity=ProjectTeam.class, cascade = CascadeType.ALL)    
 	@JoinColumn(name ="project_name", referencedColumnName = "name")
 	private List<ProjectTeam> projectTeam;
+	
+	@OneToMany(targetEntity=ProjectSales.class, cascade = CascadeType.ALL)    
+	@JoinColumn(name ="project_name", referencedColumnName = "name")
+	private List<ProjectSales> salesDetails;
 
 	public Long getId() {
 		return id;
@@ -286,12 +274,12 @@ public class Project implements Serializable{
 		this.tokenDistributionLink = tokenDistributionLink;
 	}
 
-	public String getSaleDetailsLink() {
-		return saleDetailsLink;
+	public String getReleaseDate() {
+		return releaseDate;
 	}
 
-	public void setSaleDetailsLink(String saleDetailsLink) {
-		this.saleDetailsLink = saleDetailsLink;
+	public void setReleaseDate(String releaseDate) {
+		this.releaseDate = releaseDate;
 	}
 
 	public Date getCreatedDate() {
@@ -318,62 +306,6 @@ public class Project implements Serializable{
 		this.verified = verified;
 	}
 
-	public String getUpcomingSale() {
-		return upcomingSale;
-	}
-
-	public void setUpcomingSale(String upcomingSale) {
-		this.upcomingSale = upcomingSale;
-	}
-
-	public Date getSaleStartDate() {
-		return saleStartDate;
-	}
-
-	public void setSaleStartDate(Date saleStartDate) {
-		this.saleStartDate = saleStartDate;
-	}
-
-	public Date getSaleEndDate() {
-		return saleEndDate;
-	}
-
-	public void setSaleEndDate(Date saleEndDate) {
-		this.saleEndDate = saleEndDate;
-	}
-
-	public String getSaleDetailLink() {
-		return saleDetailLink;
-	}
-
-	public void setSaleDetailLink(String saleDetailLink) {
-		this.saleDetailLink = saleDetailLink;
-	}
-
-	public String getSaleTokenPrice() {
-		return saleTokenPrice;
-	}
-
-	public void setSaleTokenPrice(String saleTokenPrice) {
-		this.saleTokenPrice = saleTokenPrice;
-	}
-
-	public String getTokenDistributionDetail() {
-		return tokenDistributionDetail;
-	}
-
-	public void setTokenDistributionDetail(String tokenDistributionDetail) {
-		this.tokenDistributionDetail = tokenDistributionDetail;
-	}
-
-	public String getAcceptedFunding() {
-		return acceptedFunding;
-	}
-
-	public void setAcceptedFunding(String acceptedFunding) {
-		this.acceptedFunding = acceptedFunding;
-	}
-
 	public List<ProjectTeam> getProjectTeam() {
 		return projectTeam;
 	}
@@ -382,9 +314,13 @@ public class Project implements Serializable{
 		this.projectTeam = projectTeam;
 	}
 
-	
+	public List<ProjectSales> getSalesDetails() {
+		return salesDetails;
+	}
 
-	
-	
+	public void setSalesDetails(List<ProjectSales> salesDetails) {
+		this.salesDetails = salesDetails;
+	}
+
 	
 }

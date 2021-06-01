@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.buildingon.cardano.boc.dto.DashboardStatProject;
 import com.buildingon.cardano.boc.dto.DashboardStats;
 import com.buildingon.cardano.boc.dto.Project;
+import com.buildingon.cardano.boc.dto.ProjectSales;
 import com.buildingon.cardano.boc.dto.User;
 import com.buildingon.cardano.boc.repo.ProjectRepository;
 import com.buildingon.cardano.boc.service.ProjectService;
@@ -77,7 +78,11 @@ public class Projects {
 
 		User valiUser = userService.validateUser(user);
 
-		if (valiUser != null) {
+		if (valiUser != null) {			
+			for (int i = 0; i < project.getSalesDetails().size(); i++) {
+				project.getSalesDetails().get(i).setProjectName(project.getName());
+			}
+			
 			projectRepo.save(project);
 			JsonNode json = mapper.readTree("{\"response\": \"updated\" }");
 			return ResponseEntity.ok(json);
