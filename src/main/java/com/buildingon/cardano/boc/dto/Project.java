@@ -35,7 +35,7 @@ public class Project implements Serializable{
 	@Column(name = "ticker")
 	private String ticker;
 
-	@Column(name = "stage", nullable = false)
+	@Column(name = "stage")
 	private String stage;
 
 	@Column(name = "description", length = 256)
