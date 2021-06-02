@@ -35,12 +35,13 @@ public class Projects {
 
 	@Autowired
 	ProjectRepository projectRepo;
+	
+	@Autowired
+	ProjectService projectService;
 
 	@Autowired
 	UserService userService;
 	
-	@Autowired
-	ProjectService projectService;
 
 	@PostMapping("/create")
 	public ResponseEntity<JsonNode> createProject(@RequestBody Project project,
@@ -56,7 +57,7 @@ public class Projects {
 		User valiUser = userService.validateUser(user);
 
 		if (valiUser != null) {
-			projectRepo.save(project);
+			projectService.saveProject(project);
 			JsonNode json = mapper.readTree("{\"response\": \"created\" }");
 			return ResponseEntity.ok(json);
 		} else {
@@ -83,7 +84,7 @@ public class Projects {
 				project.getSalesDetails().get(i).setProjectName(project.getName());
 			}
 			
-			projectRepo.save(project);
+			projectService.saveProject(project);
 			JsonNode json = mapper.readTree("{\"response\": \"updated\" }");
 			return ResponseEntity.ok(json);
 		} else {

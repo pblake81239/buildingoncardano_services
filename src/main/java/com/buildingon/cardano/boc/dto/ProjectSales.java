@@ -41,7 +41,8 @@ public class ProjectSales implements Serializable {
 	@Column(name = "accepted_funding")
 	private String acceptedFunding;
 	
-	
+	@Column(name = "sale_status")
+	private String saleStatus;
 	
 	
 	public Long getId() {
@@ -98,6 +99,13 @@ public class ProjectSales implements Serializable {
 	public void setAcceptedFunding(String acceptedFunding) {
 		this.acceptedFunding = acceptedFunding;
 	}
+	public String getSaleStatus() {
+		return saleStatus;
+	}
+	public void setSaleStatus(String saleStatus) {
+		this.saleStatus = saleStatus;
+	}
+
 	
 	
 
