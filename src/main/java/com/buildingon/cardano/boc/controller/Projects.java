@@ -114,8 +114,8 @@ public class Projects {
 	}
 
 	@GetMapping(path = "/details/name/{name}")
-	public Optional<Project> getProjectDetailsByName(@PathVariable String name) {
-		return Optional.ofNullable(projectService.projectsByName(name));
+	public Optional<Project> getProjectDetailsByName(@RequestHeader("ownerEmail") String ownerEmail, @PathVariable String name) {
+		return Optional.ofNullable(projectService.projectsByName(ownerEmail, name));
 	}
 	
 	@GetMapping(path = "/stats")

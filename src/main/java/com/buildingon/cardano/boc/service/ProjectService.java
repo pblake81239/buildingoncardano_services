@@ -29,13 +29,21 @@ public class ProjectService {
 					.setGithub(urlFormatter.formatUrlWithHttps(project.getProjectTeam().get(i).getGithub()));
 
 		}
+		
+		//code to make sure it always updates an existing if name is the same.
+		Project existingProject = projectRepo.projectsByName(project.getOwnerEmail(), project.getName());
+		if(existingProject != null) {
+			if(existingProject.getOwnerEmail().equals(project.getOwnerEmail())) {
+				project.setId(existingProject.getId());
+			}
+		}
 
 		Project response = projectRepo.save(project);
 		return response;
 	}
 
-	public Project projectsByName(String name) {
-		Project response = projectRepo.projectsByName(name);
+	public Project projectsByName(String ownerEmail, String name) {
+		Project response = projectRepo.projectsByName(ownerEmail, name);
 		return response;
 	}
 }
