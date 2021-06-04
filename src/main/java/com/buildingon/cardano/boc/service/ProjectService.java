@@ -39,7 +39,7 @@ public class ProjectService {
 		}
 		
 		//code to make sure it always updates an existing if name is the same.
-		Project existingProject = projectRepo.projectsByName(project.getOwnerEmail(), project.getName());
+		Project existingProject = projectRepo.projectsByNameAndOwner(project.getOwnerEmail(), project.getName());
 		if(existingProject != null) {
 			if(existingProject.getOwnerEmail().equals(project.getOwnerEmail())) {
 				project.setId(existingProject.getId());
@@ -50,8 +50,8 @@ public class ProjectService {
 		return response;
 	}
 
-	public Project projectsByName(String ownerEmail, String name) {
-		Project response = projectRepo.projectsByName(ownerEmail, name);
+	public Project projectsByName(String name) {
+		Project response = projectRepo.projectsByName(name);
 		return response;
 	}
 }
