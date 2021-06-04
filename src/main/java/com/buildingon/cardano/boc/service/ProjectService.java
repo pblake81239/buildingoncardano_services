@@ -1,5 +1,7 @@
 package com.buildingon.cardano.boc.service;
 
+import javax.persistence.Column;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +22,12 @@ public class ProjectService {
 		project.setHomepage(urlFormatter.formatUrlWithHttps(project.getHomepage()));
 		project.setWhitepaperUrl(urlFormatter.formatUrlWithHttps(project.getWhitepaperUrl()));
 		project.setImageUrl(urlFormatter.formatUrlWithHttps(project.getImageUrl()));
+		
+		project.setDiscordHandle(urlFormatter.formatUrlWithHttps(project.getDiscordHandle()));
+		project.setYoutubeHandle(urlFormatter.formatUrlWithHttps(project.getYoutubeHandle()));
+		project.setTwitterHandle(urlFormatter.formatUrlWithHttps(project.getTwitterHandle()));
+		project.setGithubLink(urlFormatter.formatUrlWithHttps(project.getGithubLink()));
+		project.setFacebookHandle(urlFormatter.formatUrlWithHttps(project.getFacebookHandle()));
 
 		for (int i = 0; i < project.getProjectTeam().size(); i++) {
 
