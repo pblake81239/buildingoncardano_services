@@ -8,10 +8,10 @@ public class UrlFormatter {
 	public String formatUrlWithHttps(String url) {
 
 		if (url != null && !url.isEmpty()) {
-			if (url.startsWith("https.")) {
+			if (url.startsWith("https:")) {
 				return url;
-			} else if (url.startsWith("http.")) {
-				url = url.replace("http.", "https.");
+			} else if (url.startsWith("http:")) {
+				url = url.replace("http:", "https:");
 				return url;
 			} else {
 				return "https://" + url;
