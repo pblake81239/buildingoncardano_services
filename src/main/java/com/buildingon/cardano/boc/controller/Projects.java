@@ -127,8 +127,6 @@ public class Projects {
 	public DashboardStats getProjectsStats() {
 
 		DashboardStats dashboardStats = new DashboardStats();
-
-		projectRepo.totalProjects();
 		
 		dashboardStats.setTotalProjects(projectRepo.totalProjects());
 
