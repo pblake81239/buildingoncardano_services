@@ -79,6 +79,9 @@ public class Project implements Serializable{
 	private String circulatingSupply;
 	@Column(name = "token_distribution_link")
 	private String tokenDistributionLink;
+	
+	@Column(name = "policy_id")
+	private String policyID;	
 
 	@Column(name = "release_date")
 	private String releaseDate;
@@ -274,6 +277,14 @@ public class Project implements Serializable{
 		this.tokenDistributionLink = tokenDistributionLink;
 	}
 
+	public String getPolicyID() {
+		return policyID;
+	}
+
+	public void setPolicyID(String policyID) {
+		this.policyID = policyID;
+	}
+
 	public String getReleaseDate() {
 		return releaseDate;
 	}
@@ -320,7 +331,5 @@ public class Project implements Serializable{
 
 	public void setSalesDetails(List<ProjectSales> salesDetails) {
 		this.salesDetails = salesDetails;
-	}
-
-	
+	}	
 }
