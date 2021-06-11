@@ -22,6 +22,9 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("SELECT p FROM Project p WHERE LOWER(p.type) LIKE %?1% AND p.verified = 'true'")
     public List<Project> projectsByType(String type);
     
+    @Query("SELECT p FROM Project p WHERE LOWER(p.type) LIKE %?1% AND p.verified = 'true' AND p.name != ?2")
+    public List<Project> relatedProjectsByType(String type, String project);
+    
     @Query("SELECT p FROM Project p WHERE LOWER(p.ownerEmail) = LOWER(?1)")
     public List<Project> projectsByOwner(String ownerEmail);
     

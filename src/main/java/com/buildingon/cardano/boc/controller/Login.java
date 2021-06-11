@@ -25,16 +25,21 @@ public class Login {
 	UserRepository userRepo;
 
 	@PostMapping("/user")
-	public ResponseEntity<JsonNode> processRegister(@RequestBody User user) throws JsonMappingException, JsonProcessingException {
+	public ResponseEntity<JsonNode> processRegister(@RequestBody User user)
+			throws JsonMappingException, JsonProcessingException {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		User dbUser = userRepo.findByEmail(user.getEmail());
-		
+
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode json;
 
 		if (dbUser != null) {
 			if (passwordEncoder.matches(user.getPassword(), dbUser.getPassword())) {
-				json = mapper.readTree("{\"response\": \"valid_user\" }");
+				if (user.getEmailConfirmed() != null && user.getEmailConfirmed().equals("true")) {
+					json = mapper.readTree("{\"response\": \"valid_user\" }");
+				} else {
+					json = mapper.readTree("{\"response\": \"email_not_verified\" }");
+				}
 			} else {
 				json = mapper.readTree("{\"response\": \"incorrect password\" }");
 			}
@@ -42,7 +47,7 @@ public class Login {
 		} else {
 			json = mapper.readTree("{\"response\": \"user doesnt exist\" }");
 		}
-		
+
 		return ResponseEntity.ok(json);
 	}
 }

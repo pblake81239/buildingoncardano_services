@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "projects")
@@ -64,6 +65,11 @@ public class Project implements Serializable{
 	private String discordHandle;
 	@Column(name = "github_link")
 	private String githubLink;
+	@Column(name = "reddit_handle")
+	private String redditHandle;
+	@Column(name = "gitlab_link")
+	private String gitLabLink;
+	
 
 	@Column(name = "image_url")
 	private String imageUrl;
@@ -101,6 +107,9 @@ public class Project implements Serializable{
 	@JoinColumn(name ="project_name", referencedColumnName = "name")
 	private List<ProjectSales> salesDetails;
 
+	@Transient
+	private List<Project> relatedProjects;
+	
 	public Long getId() {
 		return id;
 	}
@@ -331,5 +340,30 @@ public class Project implements Serializable{
 
 	public void setSalesDetails(List<ProjectSales> salesDetails) {
 		this.salesDetails = salesDetails;
+	}
+
+	public List<Project> getRelatedProjects() {
+		return relatedProjects;
+	}
+
+	public void setRelatedProjects(List<Project> relatedProjects) {
+		this.relatedProjects = relatedProjects;
+	}
+
+	public String getRedditHandle() {
+		return redditHandle;
+	}
+
+	public void setRedditHandle(String redditHandle) {
+		this.redditHandle = redditHandle;
+	}
+
+	public String getGitLabLink() {
+		return gitLabLink;
+	}
+
+	public void setGitLabLink(String gitLabLink) {
+		this.gitLabLink = gitLabLink;
 	}	
+	
 }

@@ -23,12 +23,24 @@ public class User {
      
     @Column(nullable = false, length = 64)
     private String password;
+    
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+     
      
 //    @Column(name = "first_name", nullable = false, length = 20)
 //    private String firstName;
 //     
 //    @Column(name = "last_name", nullable = false, length = 20)
 //    private String lastName;
+
+	public String getVerificationCode() {
+		return verificationCode;
+	}
+
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
+	}
 
 	public Long getId() {
 		return id;
