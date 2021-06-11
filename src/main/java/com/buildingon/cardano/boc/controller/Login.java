@@ -35,7 +35,7 @@ public class Login {
 
 		if (dbUser != null) {
 			if (passwordEncoder.matches(user.getPassword(), dbUser.getPassword())) {
-				if (user.getEmailConfirmed() != null && user.getEmailConfirmed().equals("true")) {
+				if (dbUser.getEmailConfirmed() != null && dbUser.getEmailConfirmed().equals("true")) {
 					json = mapper.readTree("{\"response\": \"valid_user\" }");
 				} else {
 					json = mapper.readTree("{\"response\": \"email_not_verified\" }");
