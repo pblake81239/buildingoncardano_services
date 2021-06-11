@@ -52,7 +52,7 @@ public class Registration {
 			json = mapper.readTree("{\"response\": \"user_exists\" }");
 		} else {
 			userRepo.save(user);
-			sendVerificationEmail(user, "http://localhost:3000/");
+			sendVerificationEmail(user, "https://buildingoncardano.com/");
 			json = mapper.readTree("{\"response\": \"register_success\" }");
 		}
 
