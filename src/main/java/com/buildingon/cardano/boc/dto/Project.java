@@ -98,6 +98,10 @@ public class Project implements Serializable{
 
 	@Column(name = "verified")
 	private String verified;
+	
+	@Column(name = "team_description")
+	private String teamDescription;
+	
 		
 	@OneToMany(targetEntity=ProjectTeam.class, cascade = CascadeType.ALL)    
 	@JoinColumn(name ="project_name", referencedColumnName = "name")
