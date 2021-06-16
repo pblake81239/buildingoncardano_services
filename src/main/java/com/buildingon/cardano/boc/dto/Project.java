@@ -368,6 +368,16 @@ public class Project implements Serializable{
 
 	public void setGitLabLink(String gitLabLink) {
 		this.gitLabLink = gitLabLink;
+	}
+
+	public String getTeamDescription() {
+		return teamDescription;
+	}
+
+	public void setTeamDescription(String teamDescription) {
+		this.teamDescription = teamDescription;
 	}	
+	
+	
 	
 }
