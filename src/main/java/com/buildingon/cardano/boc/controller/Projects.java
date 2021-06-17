@@ -141,6 +141,13 @@ public class Projects {
 		  projectTypes.add("Nft");
 		  projectTypes.add("Dex");
 		  
+		  projectTypes.add("Cross-Chain");
+		  projectTypes.add("Gaming");
+		  projectTypes.add("Oracle");
+		  projectTypes.add("Stablecoin");
+		  projectTypes.add("Infrastructure");
+		  projectTypes.add("Catalyst");
+		  		  
 		for (String type : projectTypes) {
 			DashboardStatProject dashboardStatProject = new DashboardStatProject();
 			dashboardStatProject.setProjectType(type);
