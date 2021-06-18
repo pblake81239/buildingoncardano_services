@@ -95,6 +95,11 @@ public class Projects {
 
 	@GetMapping("/all")
 	public List<Project> getAllProjects() {
+		return projectRepo.findAllVerified();
+	}
+	
+	@GetMapping("/latest")
+	public List<Project> getLatestProjects() {
 		return projectRepo.allProjectsOrderedByDateCreated("true");
 	}
 
