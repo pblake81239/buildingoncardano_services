@@ -27,4 +27,9 @@ public class ProjectsSales {
 	public List<ProjectSales> getAllLiveProjectsSales() {
 		return projectSalesRepository.getLiveSalesOfAllProjects();
 	}
+	
+	@GetMapping("/all/liveandupcoming")
+	public List<ProjectSales> getAllLiveAndUpcomingProjectsSales() {
+		return projectSalesRepository.getLiveAndUpcomingSalesOfAllProjects();
+	}
 }

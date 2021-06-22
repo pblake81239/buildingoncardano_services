@@ -13,5 +13,8 @@ public interface ProjectSalesRepository extends JpaRepository<ProjectSales, Long
 	
     @Query("SELECT p FROM ProjectSales p where p.saleStatus = 'Live'")
     public List<ProjectSales> getLiveSalesOfAllProjects();
+    
+    @Query("SELECT p FROM ProjectSales p where p.saleStatus = 'Live' OR p.saleStatus = 'Upcoming' order by p.saleStartDate")
+    public List<ProjectSales> getLiveAndUpcomingSalesOfAllProjects();
 
 }
