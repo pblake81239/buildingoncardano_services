@@ -145,7 +145,6 @@ public class Projects {
 		  projectTypes.add("Data");
 		  projectTypes.add("Nft");
 		  projectTypes.add("Dex");
-		  
 		  projectTypes.add("Cross-Chain");
 		  projectTypes.add("Gaming");
 		  projectTypes.add("Oracle");

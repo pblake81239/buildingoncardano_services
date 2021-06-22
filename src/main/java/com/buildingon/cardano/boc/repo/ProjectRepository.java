@@ -10,7 +10,7 @@ import com.buildingon.cardano.boc.dto.Project;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 	
-    @Query("SELECT p FROM Project p where p.verified = 'true'")
+    @Query("SELECT p FROM Project p where p.verified = 'true' order by p.name")
     public List<Project> findAllVerified();
 	
     @Query(value="SELECT * FROM projects p where p.verified = ?1 ORDER by p.updated_date DESC LIMIT 8", nativeQuery = true)
