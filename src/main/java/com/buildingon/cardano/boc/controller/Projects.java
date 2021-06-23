@@ -42,7 +42,8 @@ public class Projects {
 	@Autowired
 	UserService userService;
 	
-
+//https://mkyong.com/spring-boot/spring-boot-file-upload-example/
+//	https://www.geeksforgeeks.org/file-uploading-in-react-js/	
 	@PostMapping("/create")
 	public ResponseEntity<JsonNode> createProject(@RequestBody Project project,
 			@RequestHeader("password") String pass) throws JsonMappingException, JsonProcessingException {
