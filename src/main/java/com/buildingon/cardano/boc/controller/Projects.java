@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -94,11 +96,14 @@ public class Projects {
 		}
 	}
 
+	@Cacheable("allprojects")
 	@GetMapping("/all")
 	public List<Project> getAllProjects() {
+		System.out.println("all projects called");
 		return projectRepo.findAllVerified();
 	}
-	
+
+	@Cacheable("latestprojects")
 	@GetMapping("/latest")
 	public List<Project> getLatestProjects() {
 		return projectRepo.allProjectsOrderedByDateCreated("true");
