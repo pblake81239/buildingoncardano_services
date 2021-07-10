@@ -2,8 +2,10 @@ package com.buildingon.cardano.boc;
 
 import java.util.Properties;
 
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -15,8 +17,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 public class BocApplication {
 
+    private static ConfigurableApplicationContext context;
+    
 	public static void main(String[] args) {
-		SpringApplication.run(BocApplication.class, args);
+		context = SpringApplication.run(BocApplication.class, args);
 	}
 
 	
@@ -50,4 +54,17 @@ public class BocApplication {
 	    
 	    return mailSender;
 	}
+	
+
+    public static void restart() {
+        ApplicationArguments args = context.getBean(ApplicationArguments.class);
+
+        Thread thread = new Thread(() -> {
+            context.close();
+            context = SpringApplication.run(BocApplication.class, args.getSourceArgs());
+        });
+
+        thread.setDaemon(false);
+        thread.start();
+    }
 }
