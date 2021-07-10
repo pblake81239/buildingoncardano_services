@@ -25,19 +25,19 @@ public class CacheConfiguration {
     }
 
 	@CacheEvict(allEntries = true, cacheNames = { "allprojects" })
-	@Scheduled(fixedDelay = 120000)
+	@Scheduled(fixedDelay = 240000)
 	public void cacheEvict() {
 		log.info("Cache allprojects evicted");
 	}
 	
 	
 	@CacheEvict(allEntries = true, cacheNames = { "latestprojects" })
-	@Scheduled(fixedDelay = 240000)
+	@Scheduled(fixedDelay = 480000)
 	public void cacheEvict2() {
 		log.info("Cache latestprojects evicted ");
 	}
 	
-	@Scheduled(cron = "0 40 8 * * ?")
+	@Scheduled(cron = "0 43 9 * * ?")
 	public void restartTimer() {
 		log.info("Restarting");
 		BocApplication.restart();
