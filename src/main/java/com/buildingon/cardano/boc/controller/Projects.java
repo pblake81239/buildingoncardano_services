@@ -99,7 +99,6 @@ public class Projects {
 	@Cacheable("allprojects")
 	@GetMapping("/all")
 	public List<Project> getAllProjects() {
-		System.out.println("all projects called");
 		return projectRepo.findAllVerified();
 	}
 
@@ -108,7 +107,13 @@ public class Projects {
 	public List<Project> getLatestProjects() {
 		return projectRepo.allProjectsOrderedByDateCreated("true");
 	}
+	
+	@GetMapping("/mostviewed")
+	public List<Project> getMostViewedProjects() {
+		return projectService.mostViewProjects();
+	}
 
+	
 	@GetMapping("/type/{projectType}")
 	public List<Project> getAllProjects(@PathVariable String projectType) {
 		return projectRepo.projectsByType(projectType.toLowerCase());

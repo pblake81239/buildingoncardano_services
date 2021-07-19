@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.buildingon.cardano.boc.dto.Project;
+import com.buildingon.cardano.boc.dto.ProjectViews;
 import com.buildingon.cardano.boc.repo.ProjectRepository;
+import com.buildingon.cardano.boc.repo.ProjectViewsRepository;
 import com.buildingon.cardano.boc.util.UrlFormatter;
 
 @Component
@@ -21,6 +23,9 @@ public class ProjectService {
 
 	@Autowired
 	UrlFormatter urlFormatter;
+
+	@Autowired
+	ProjectViewsService projectViewsService;
 
 	public Project saveProject(Project project) {
 
@@ -61,6 +66,10 @@ public class ProjectService {
 	public Project projectsByName(String name) {
 		Project response = projectRepo.projectsByName(name);
 
+		if (response != null) {
+			projectViewsService.updateProjectViewCount(name);
+		}
+
 		// get 4 related projects
 		String projectType = response.getType();
 
@@ -97,5 +106,15 @@ public class ProjectService {
 		response.setRelatedProjects(fourRelatedProjects);
 
 		return response;
+	}
+
+	public List<Project> mostViewProjects() {
+		List<ProjectViews> mostViewed = projectViewsService.getTopMostViewed();
+		List<Project> projects = new ArrayList<>();
+		for (ProjectViews projectViews : mostViewed) {
+			Project response = projectRepo.projectsByName(projectViews.getProject_name());
+			projects.add(response);
+		}
+		return projects;
 	}
 }
