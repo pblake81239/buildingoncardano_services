@@ -108,9 +108,9 @@ public class Projects {
 		return projectRepo.allProjectsOrderedByDateCreated("true");
 	}
 	
-	@GetMapping("/mostviewed")
-	public List<Project> getMostViewedProjects() {
-		return projectService.mostViewProjects();
+	@GetMapping("/mostviewed/{month}")
+	public List<Project> getMostViewedProjects(@PathVariable String month) {
+		return projectService.mostViewProjects(month);
 	}
 
 	

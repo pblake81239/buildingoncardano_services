@@ -30,8 +30,8 @@ public class ProjectViewsService {
 		projectViewsRepository.save(projectViews);
 	}
 
-	public List<ProjectViews> getTopMostViewed() {		
-		return projectViewsRepository.mostViewedProjects(getMonth());
+	public List<ProjectViews> getTopMostViewed(String month) {		
+		return projectViewsRepository.mostViewedProjects(month);
 	}
 
 	private String getMonth() {

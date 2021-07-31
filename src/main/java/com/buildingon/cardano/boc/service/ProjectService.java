@@ -108,8 +108,8 @@ public class ProjectService {
 		return response;
 	}
 
-	public List<Project> mostViewProjects() {
-		List<ProjectViews> mostViewed = projectViewsService.getTopMostViewed();
+	public List<Project> mostViewProjects(String month) {
+		List<ProjectViews> mostViewed = projectViewsService.getTopMostViewed(month);
 		List<Project> projects = new ArrayList<>();
 		for (ProjectViews projectViews : mostViewed) {
 			Project response = projectRepo.projectsByName(projectViews.getProject_name());
