@@ -21,21 +21,36 @@ public class CacheConfiguration {
 	
     @Bean
     public ConcurrentMapCacheManager cacheManager() {
-        return new ConcurrentMapCacheManager("allprojects", "latestprojects");
+        return new ConcurrentMapCacheManager("allprojects", "latestprojects", "recentlyupdated", "featuredprojects");
     }
 
 	@CacheEvict(allEntries = true, cacheNames = { "allprojects" })
-	@Scheduled(fixedDelay = 240000)
+	@Scheduled(fixedDelay = 1240000)
 	public void cacheEvict() {
 		log.info("Cache allprojects evicted");
 	}
 	
 	
 	@CacheEvict(allEntries = true, cacheNames = { "latestprojects" })
-	@Scheduled(fixedDelay = 480000)
+	@Scheduled(fixedDelay = 3200000)
 	public void cacheEvict2() {
 		log.info("Cache latestprojects evicted ");
 	}
+	
+	@CacheEvict(allEntries = true, cacheNames = { "recentlyupdated"})
+	@Scheduled(fixedDelay = 3600000)
+	public void cacheEvict3() {
+		log.info("Cache recentlyupdated evicted ");
+	}
+	
+	@CacheEvict(allEntries = true, cacheNames = { "featuredprojects" })
+	@Scheduled(fixedDelay = 2600000)
+	public void cacheEvict4() {
+		log.info("Cache featuredprojects evicted ");
+	}
+	
+	
+	
 	
 	@Scheduled(cron = "0 43 9 * * ?")
 	public void restartTimer() {

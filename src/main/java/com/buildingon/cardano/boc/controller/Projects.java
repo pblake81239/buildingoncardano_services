@@ -105,7 +105,13 @@ public class Projects {
 	@Cacheable("latestprojects")
 	@GetMapping("/latest")
 	public List<Project> getLatestProjects() {
-		return projectRepo.allProjectsOrderedByDateCreated("true");
+		return projectRepo.recentlyAddedProjects("true");
+	}
+	
+	@Cacheable("recentlyupdated")
+	@GetMapping("/recentlyupdated")
+	public List<Project> getUpdatedProjects() {
+		return projectRepo.recentlyUpdateProjects("true");
 	}
 	
 	@GetMapping("/mostviewed/{month}")

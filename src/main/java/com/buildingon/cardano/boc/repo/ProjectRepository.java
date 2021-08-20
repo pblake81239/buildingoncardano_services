@@ -13,8 +13,11 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("SELECT p FROM Project p where p.verified = 'true' order by p.name")
     public List<Project> findAllVerified();
 	
-    @Query(value="SELECT * FROM projects p where p.verified = ?1 ORDER by p.updated_date DESC LIMIT 8", nativeQuery = true)
-    public List<Project> allProjectsOrderedByDateCreated(String verified);
+    @Query(value="SELECT * FROM projects p where p.verified = ?1 ORDER by p.created_date DESC LIMIT 6", nativeQuery = true)
+    public List<Project> recentlyAddedProjects(String verified);
+    
+    @Query(value="SELECT * FROM projects p where p.verified = ?1 and p.created_date != p.updated_date ORDER by p.created_date DESC LIMIT 6", nativeQuery = true)
+    public List<Project> recentlyUpdateProjects(String verified);
         
     @Query("SELECT count(*) FROM Project p where p.verified = 'true'")
     public int totalProjects();
