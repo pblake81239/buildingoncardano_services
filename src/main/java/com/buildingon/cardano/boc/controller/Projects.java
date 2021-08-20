@@ -157,11 +157,10 @@ public class Projects {
 		
 		List<String> projectTypes = new ArrayList<>();
 		  projectTypes.add("Defi");
-		  projectTypes.add("Application");
+		  projectTypes.add("Subscriptions");
 		  projectTypes.add("Tooling");
 		  projectTypes.add("Wallet");
 		  projectTypes.add("Data");
-		  projectTypes.add("Nft");
 		  projectTypes.add("Dex");
 		  projectTypes.add("Cross-Chain");
 		  projectTypes.add("Gaming");
@@ -169,15 +168,32 @@ public class Projects {
 		  projectTypes.add("Stablecoin");
 		  projectTypes.add("Infrastructure");
 		  projectTypes.add("Catalyst");
+		  
+		  projectTypes.add("Telcom");
+		  projectTypes.add("Gambling");
+		  projectTypes.add("Payment");
+		  
+		  projectTypes.add("Nft");
+		  projectTypes.add("Nft Platform");
+		  projectTypes.add("Nft Marketplace");
+		  projectTypes.add("Nft Lending");
+
+		  projectTypes.add("Charity");
+		  projectTypes.add("Forex");
+		  projectTypes.add("Lending");		  
+		  projectTypes.add("Launch Pad");
+		  projectTypes.add("Cloud Storage");
 		  		  
 		for (String type : projectTypes) {
 			DashboardStatProject dashboardStatProject = new DashboardStatProject();
 			dashboardStatProject.setProjectType(type);
 
 			int count = projectRepo.totalProjectsByType(type.toLowerCase());
-			dashboardStatProject.setProjectCount(count);
-			
-			dashStats.add(dashboardStatProject);
+			if(count != 0) {
+				dashboardStatProject.setProjectCount(count);
+				dashStats.add(dashboardStatProject);
+			}	
+
 		}
 
 		dashboardStats.setProjectTypesAndCount(dashStats);
