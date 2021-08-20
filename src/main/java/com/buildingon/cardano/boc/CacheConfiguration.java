@@ -21,7 +21,8 @@ public class CacheConfiguration {
 	
     @Bean
     public ConcurrentMapCacheManager cacheManager() {
-        return new ConcurrentMapCacheManager("allprojects", "latestprojects", "recentlyupdated", "featuredprojects");
+        return new ConcurrentMapCacheManager("allprojects", "latestprojects", "recentlyupdated", 
+        		"featuredprojects", "mostviewed");
     }
 
 	@CacheEvict(allEntries = true, cacheNames = { "allprojects" })
@@ -31,7 +32,7 @@ public class CacheConfiguration {
 	}
 	
 	
-	@CacheEvict(allEntries = true, cacheNames = { "latestprojects" })
+	@CacheEvict(allEntries = true, cacheNames = { "latestprojects", "mostviewed" })
 	@Scheduled(fixedDelay = 3200000)
 	public void cacheEvict2() {
 		log.info("Cache latestprojects evicted ");

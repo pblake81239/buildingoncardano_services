@@ -114,6 +114,7 @@ public class Projects {
 		return projectRepo.recentlyUpdateProjects("true");
 	}
 	
+	@Cacheable("mostviewed")
 	@GetMapping("/mostviewed/{month}")
 	public List<Project> getMostViewedProjects(@PathVariable String month) {
 		return projectService.mostViewProjects(month);
