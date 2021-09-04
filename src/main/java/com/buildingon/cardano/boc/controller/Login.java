@@ -27,14 +27,14 @@ public class Login {
 	@PostMapping("/user")
 	public ResponseEntity<JsonNode> processRegister(@RequestBody User user)
 			throws JsonMappingException, JsonProcessingException {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 		User dbUser = userRepo.findByEmail(user.getEmail());
 
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode json;
 
 		if (dbUser != null) {
-			if (passwordEncoder.matches(user.getPassword(), dbUser.getPassword())) {
+			if (checkPassword(user, dbUser)) {
 				if (dbUser.getEmailConfirmed() != null && dbUser.getEmailConfirmed().equals("true")) {
 					json = mapper.readTree("{\"response\": \"valid_user\" }");
 				} else {
@@ -49,5 +49,33 @@ public class Login {
 		}
 
 		return ResponseEntity.ok(json);
+	}
+	
+	public boolean checkPassword(User user, User dbUser) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		
+		//compare out password to whats in db and if we have a temp remove it
+		if (passwordEncoder.matches(user.getPassword().trim(), dbUser.getPassword())) {
+			if(!dbUser.getTempPassword().isEmpty()) {
+				dbUser.setTempPassword(null);
+				userRepo.save(dbUser);				
+			}
+			return true;
+		}
+		
+		
+		//if we have a temp password attempt to login with it 
+		if(dbUser.getTempPassword() != null || !dbUser.getTempPassword().equals("")) {
+			if(passwordEncoder.matches(user.getPassword().trim(), dbUser.getTempPassword())){
+
+				dbUser.setPassword(dbUser.getTempPassword());
+				dbUser.setTempPassword(null);
+
+				userRepo.save(dbUser);
+				return true;
+			}
+		}
+				
+		return false;
 	}
 }

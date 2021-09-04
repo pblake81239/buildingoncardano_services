@@ -27,7 +27,7 @@ public class ProjectService {
 	@Autowired
 	ProjectViewsService projectViewsService;
 
-	public Project saveProject(Project project) {
+	public Project saveProject(Project project, String ownerEmail) {
 
 		project.setHomepage(urlFormatter.formatUrlWithHttps(project.getHomepage()));
 		project.setWhitepaperUrl(urlFormatter.formatUrlWithHttps(project.getWhitepaperUrl()));
@@ -52,11 +52,12 @@ public class ProjectService {
 		}
 
 		// code to make sure it always updates an existing if name is the same.
-		Project existingProject = projectRepo.projectsByNameAndOwner(project.getOwnerEmail(), project.getName());
+		Project existingProject = projectRepo.projectsByNameAndOwner(ownerEmail, project.getName());
 		if (existingProject != null) {
-			if (existingProject.getOwnerEmail().equals(project.getOwnerEmail())) {
-				project.setId(existingProject.getId());
-			}
+
+			project.setId(existingProject.getId());
+			project.setOwnerEmail(existingProject.getOwnerEmail());
+
 		}
 
 		Project response = projectRepo.save(project);
@@ -116,5 +117,10 @@ public class ProjectService {
 			projects.add(response);
 		}
 		return projects;
+	}
+
+	public List<Project> getProjectsByOwnerEmail(String ownerEmail) {
+
+		return projectRepo.projectsByOwner(ownerEmail);
 	}
 }

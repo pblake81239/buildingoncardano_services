@@ -19,6 +19,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "projects")
 public class Project implements Serializable{
@@ -73,6 +82,10 @@ public class Project implements Serializable{
 
 	@Column(name = "image_url")
 	private String imageUrl;
+	
+	@Column(name = "screenshot_url")
+	private String screenshotUrl;
+	
 
 	@Column(name = "owner_email")
 	private String ownerEmail;
@@ -113,271 +126,6 @@ public class Project implements Serializable{
 
 	@Transient
 	private List<Project> relatedProjects;
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getTicker() {
-		return ticker;
-	}
-
-	public void setTicker(String ticker) {
-		this.ticker = ticker;
-	}
-
-	public String getStage() {
-		return stage;
-	}
-
-	public void setStage(String stage) {
-		this.stage = stage;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getShortDescription() {
-		return shortDescription;
-	}
-
-	public void setShortDescription(String shortDescription) {
-		this.shortDescription = shortDescription;
-	}
-
-	public String getHomepage() {
-		return homepage;
-	}
-
-	public void setHomepage(String homepage) {
-		this.homepage = homepage;
-	}
-
-	public String getWhitepaperUrl() {
-		return whitepaperUrl;
-	}
-
-	public void setWhitepaperUrl(String whitepaperUrl) {
-		this.whitepaperUrl = whitepaperUrl;
-	}
-
-	public String getYouTubeEmbedId() {
-		return youTubeEmbedId;
-	}
-
-	public void setYouTubeEmbedId(String youTubeEmbedId) {
-		this.youTubeEmbedId = youTubeEmbedId;
-	}
-
-	public String getTwitterHandle() {
-		return twitterHandle;
-	}
-
-	public void setTwitterHandle(String twitterHandle) {
-		this.twitterHandle = twitterHandle;
-	}
-
-	public String getTelegramHandle() {
-		return telegramHandle;
-	}
-
-	public void setTelegramHandle(String telegramHandle) {
-		this.telegramHandle = telegramHandle;
-	}
-
-	public String getYoutubeHandle() {
-		return youtubeHandle;
-	}
-
-	public void setYoutubeHandle(String youtubeHandle) {
-		this.youtubeHandle = youtubeHandle;
-	}
-
-	public String getFacebookHandle() {
-		return facebookHandle;
-	}
-
-	public void setFacebookHandle(String facebookHandle) {
-		this.facebookHandle = facebookHandle;
-	}
-
-	public String getDiscordHandle() {
-		return discordHandle;
-	}
-
-	public void setDiscordHandle(String discordHandle) {
-		this.discordHandle = discordHandle;
-	}
-
-	public String getGithubLink() {
-		return githubLink;
-	}
-
-	public void setGithubLink(String githubLink) {
-		this.githubLink = githubLink;
-	}
-
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-
-	public String getOwnerEmail() {
-		return ownerEmail;
-	}
-
-	public void setOwnerEmail(String ownerEmail) {
-		this.ownerEmail = ownerEmail;
-	}
-
-	public String getTokenType() {
-		return tokenType;
-	}
-
-	public void setTokenType(String tokenType) {
-		this.tokenType = tokenType;
-	}
-
-	public String getTotalSupply() {
-		return totalSupply;
-	}
-
-	public void setTotalSupply(String totalSupply) {
-		this.totalSupply = totalSupply;
-	}
-
-	public String getCirculatingSupply() {
-		return circulatingSupply;
-	}
-
-	public void setCirculatingSupply(String circulatingSupply) {
-		this.circulatingSupply = circulatingSupply;
-	}
-
-	public String getTokenDistributionLink() {
-		return tokenDistributionLink;
-	}
-
-	public void setTokenDistributionLink(String tokenDistributionLink) {
-		this.tokenDistributionLink = tokenDistributionLink;
-	}
-
-	public String getPolicyID() {
-		return policyID;
-	}
-
-	public void setPolicyID(String policyID) {
-		this.policyID = policyID;
-	}
-
-	public String getReleaseDate() {
-		return releaseDate;
-	}
-
-	public void setReleaseDate(String releaseDate) {
-		this.releaseDate = releaseDate;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Date getUpdatedDate() {
-		return updatedDate;
-	}
-
-	public void setUpdatedDate(Date updatedDate) {
-		this.updatedDate = updatedDate;
-	}
-
-	public String getVerified() {
-		return verified;
-	}
-
-	public void setVerified(String verified) {
-		this.verified = verified;
-	}
-
-	public List<ProjectTeam> getProjectTeam() {
-		return projectTeam;
-	}
-
-	public void setProjectTeam(List<ProjectTeam> projectTeam) {
-		this.projectTeam = projectTeam;
-	}
-
-	public List<ProjectSales> getSalesDetails() {
-		return salesDetails;
-	}
-
-	public void setSalesDetails(List<ProjectSales> salesDetails) {
-		this.salesDetails = salesDetails;
-	}
-
-	public List<Project> getRelatedProjects() {
-		return relatedProjects;
-	}
-
-	public void setRelatedProjects(List<Project> relatedProjects) {
-		this.relatedProjects = relatedProjects;
-	}
-
-	public String getRedditHandle() {
-		return redditHandle;
-	}
-
-	public void setRedditHandle(String redditHandle) {
-		this.redditHandle = redditHandle;
-	}
-
-	public String getGitLabLink() {
-		return gitLabLink;
-	}
-
-	public void setGitLabLink(String gitLabLink) {
-		this.gitLabLink = gitLabLink;
-	}
-
-	public String getTeamDescription() {
-		return teamDescription;
-	}
-
-	public void setTeamDescription(String teamDescription) {
-		this.teamDescription = teamDescription;
-	}	
-	
 	
 	
 }

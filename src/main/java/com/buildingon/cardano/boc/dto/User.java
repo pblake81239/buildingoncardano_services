@@ -1,5 +1,8 @@
 package com.buildingon.cardano.boc.dto;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,7 +10,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Entity(name = "User")
 @Table(name = "users")
 public class User {
 
@@ -15,17 +27,23 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
      
-    @Column(nullable = false, unique = true, length = 45)
+    @Column(name = "email")
     private String email;
     
-    @Column(name = "email_confirmed",  length = 45)
+    @Column(name = "email_confirmed")
     private String emailConfirmed;
      
-    @Column(nullable = false, length = 64)
+    @Column(name = "password")
     private String password;
     
-    @Column(name = "verification_code", length = 64)
+    @Column(name = "temp_password")
+    private String tempPassword;
+    
+    @Column(name = "verification_code")
     private String verificationCode;
+    
+    @Column(name = "superuser")
+    private String superuser;
      
      
 //    @Column(name = "first_name", nullable = false, length = 20)
@@ -34,61 +52,5 @@ public class User {
 //    @Column(name = "last_name", nullable = false, length = 20)
 //    private String lastName;
 
-	public String getVerificationCode() {
-		return verificationCode;
-	}
-
-	public void setVerificationCode(String verificationCode) {
-		this.verificationCode = verificationCode;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getEmailConfirmed() {
-		return emailConfirmed;
-	}
-
-	public void setEmailConfirmed(String emailConfirmed) {
-		this.emailConfirmed = emailConfirmed;
-	}
-
-	
-//	public String getFirstName() {
-//		return firstName;
-//	}
-//
-//	public void setFirstName(String firstName) {
-//		this.firstName = firstName;
-//	}
-//
-//	public String getLastName() {
-//		return lastName;
-//	}
-//
-//	public void setLastName(String lastName) {
-//		this.lastName = lastName;
-//	}
 	
 }

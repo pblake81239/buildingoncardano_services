@@ -60,7 +60,7 @@ public class Projects {
 		User valiUser = userService.validateUser(user);
 
 		if (valiUser != null) {
-			projectService.saveProject(project);
+			projectService.saveProject(project, project.getOwnerEmail());
 			JsonNode json = mapper.readTree("{\"response\": \"created\" }");
 			return ResponseEntity.ok(json);
 		} else {
@@ -70,24 +70,27 @@ public class Projects {
 	}
 	
 	@PostMapping("/update")
-	public ResponseEntity<JsonNode> updateProject(@RequestBody Project project,
+	public ResponseEntity<JsonNode> updateProject(@RequestBody Project project, @RequestHeader("user") String userUpdating,
 			@RequestHeader("password") String pass) throws JsonMappingException, JsonProcessingException {
 		
 		project.setUpdatedDate(new Date());
 		
+		Project existingProject = projectRepo.projectsByName(project.getName());
+		
+		
 		ObjectMapper mapper = new ObjectMapper();
+		
 		User user = new User();
-		user.setEmail(project.getOwnerEmail());
+		user.setEmail(userUpdating);
 		user.setPassword(pass);
-
 		User valiUser = userService.validateUser(user);
 
-		if (valiUser != null) {			
+		if (valiUser != null && (user.getEmail().equals(valiUser.getEmail()) || valiUser.getSuperuser().equals("true")) ) {			
 			for (int i = 0; i < project.getSalesDetails().size(); i++) {
 				project.getSalesDetails().get(i).setProjectName(project.getName());
 			}
 			
-			projectService.saveProject(project);
+			projectService.saveProject(project, existingProject.getOwnerEmail());
 			JsonNode json = mapper.readTree("{\"response\": \"updated\" }");
 			return ResponseEntity.ok(json);
 		} else {
@@ -127,8 +130,23 @@ public class Projects {
 	}
 
 	@GetMapping("/owner/{ownerEmail}")
-	public List<Project> getProjectsByOwnerEmail(@PathVariable String ownerEmail) {
-		return projectRepo.projectsByOwner(ownerEmail);
+	public List<Project> getProjectsByOwnerEmail(@PathVariable String ownerEmail, @RequestHeader("password") String pass) {
+		
+		User user = new User();
+		user.setEmail(ownerEmail);
+		user.setPassword(pass);
+
+		User valiUser = userService.validateUser(user);
+		
+		if (valiUser != null) {
+			if(valiUser.getSuperuser() != null && valiUser.getSuperuser().equals("true")) {
+				return getAllProjects();
+			}
+			return projectRepo.projectsByOwner(ownerEmail);
+		}
+		else {
+			return new ArrayList<Project>();
+		}
 	}
 
 	@GetMapping(path = "/details/{projectId}")
@@ -142,7 +160,20 @@ public class Projects {
 	}
 	
 	@GetMapping(path = "/details/nameandowner/{name}")
-	public Optional<Project> getProjectDetailsByNameAndOwner(@RequestHeader("ownerEmail") String ownerEmail, @PathVariable String name) {
+	public Optional<Project> getProjectDetailsByNameAndOwner(@RequestHeader("ownerEmail") String ownerEmail, @PathVariable String name,
+			 @RequestHeader("password") String pass) {
+		User user = new User();
+		user.setEmail(ownerEmail);
+		user.setPassword(pass);
+
+		User valiUser = userService.validateUser(user);
+		
+		if (valiUser != null) {
+			if(valiUser.getSuperuser() != null && valiUser.getSuperuser().equals("true")) {
+				return Optional.ofNullable(projectRepo.projectsByName(name));
+			}
+		}
+		
 		return Optional.ofNullable(projectRepo.projectsByNameAndOwner(ownerEmail, name));
 	}
 	

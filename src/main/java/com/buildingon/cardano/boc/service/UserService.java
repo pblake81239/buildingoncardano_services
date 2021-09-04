@@ -20,7 +20,7 @@ public class UserService {
 		User dbUser = userRepo.findByEmail(user.getEmail());
 					
 		if (passwordEncoder.matches(user.getPassword(), dbUser.getPassword())) {
-			return user;
+			return dbUser;
 		} else {
 			return null;
 		}
