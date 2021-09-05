@@ -55,8 +55,8 @@ public class Login {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		
 		//compare out password to whats in db and if we have a temp remove it
-		if (passwordEncoder.matches(user.getPassword().trim(), dbUser.getPassword())) {
-			if(!dbUser.getTempPassword().isEmpty()) {
+		if (passwordEncoder.matches(user.getPassword(), dbUser.getPassword())) {
+			if(dbUser.getTempPassword() != null && !dbUser.getTempPassword().isEmpty()) {
 				dbUser.setTempPassword(null);
 				userRepo.save(dbUser);				
 			}
