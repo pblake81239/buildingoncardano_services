@@ -114,6 +114,7 @@ public class ProjectService {
 		List<Project> projects = new ArrayList<>();
 		for (ProjectViews projectViews : mostViewed) {
 			Project response = projectRepo.projectsByName(projectViews.getProject_name());
+			if(response.getVerified().equals("true"))
 			projects.add(response);
 		}
 		return projects;
