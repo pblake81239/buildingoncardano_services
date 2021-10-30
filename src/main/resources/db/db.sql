@@ -83,3 +83,17 @@ CREATE TABLE featuredprojects (
   end_date VARCHAR(250),
   promotion_type VARCHAR(250)
 );
+
+
+DROP tableif EXISTS project_tokens;
+CREATE TABLE project_tokens
+             (
+                          id SERIAL PRIMARY KEY,
+                          project_name VARCHAR(250),
+                          policy_id          VARCHAR(250),
+                          asset_name         VARCHAR(250),
+                          total_supply       VARCHAR(250),
+                          total_transactions VARCHAR(250),
+                          total_wallets      VARCHAR(250),
+                          creation_time      VARCHAR(250),
+             );
