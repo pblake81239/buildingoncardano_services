@@ -1,15 +1,18 @@
 package com.buildingon.cardano.boc;
 
+import java.time.Duration;
 import java.util.Properties;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -54,6 +57,15 @@ public class BocApplication {
 	    
 	    return mailSender;
 	}
+	
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) 
+    {
+        return restTemplateBuilder
+           .setConnectTimeout(Duration.ofMillis(260000))
+           .setReadTimeout(Duration.ofMillis(280000))
+           .build();
+    }
 	
 
     public static void restart() {
