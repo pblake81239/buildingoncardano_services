@@ -10,7 +10,7 @@ import com.buildingon.cardano.boc.dto.Project;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 	
-    @Query(value="SELECT * FROM projects p where ticker is not null and policy_id is not null", nativeQuery = true)
+    @Query(value="SELECT * FROM projects p where ticker is not null and policy_id is not null and verified = 'true'", nativeQuery = true)
     public List<Project> getAllProjectsWithTokensAndPolicyID();
 	
     @Query("SELECT p FROM Project p where p.verified = 'true' order by p.name")

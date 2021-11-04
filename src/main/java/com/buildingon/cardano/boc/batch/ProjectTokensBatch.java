@@ -52,6 +52,8 @@ public class ProjectTokensBatch {
 				String hexOfTicker = ASCIItoHEX(project.getTicker());
 				String policyId = project.getPolicyID();
 
+				
+				
 				log.info("getting token details for project: " + project.getName());
 				log.info("policyid: " + policyId);
 				log.info("hexOfTicker: " + hexOfTicker);

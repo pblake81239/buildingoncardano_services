@@ -26,4 +26,14 @@ public class TokenController {
 		return repo.projectsTokenByProjectName(projectname);
 	}
 
+	
+	@GetMapping("/walletranking")
+	public List<ProjectTokens> getProjectTokenWalletRanking() {
+		return repo.walletTotalsInDescOrder();
+	}
+	
+	@GetMapping("/transactionranking")
+	public List<ProjectTokens> getProjectTokenTransactionRanking() {
+		return repo.transactionTotalsInDescOrder();
+	}
 }
