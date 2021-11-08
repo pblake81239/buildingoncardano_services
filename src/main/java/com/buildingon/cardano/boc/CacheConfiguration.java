@@ -22,7 +22,7 @@ public class CacheConfiguration {
     @Bean
     public ConcurrentMapCacheManager cacheManager() {
         return new ConcurrentMapCacheManager("allprojects", "latestprojects", "recentlyupdated", 
-        		"featuredprojects", "mostviewed");
+        		"featuredprojects", "mostviewed", "allProjectsInTypesList");
     }
 
 	@CacheEvict(allEntries = true, cacheNames = { "allprojects" })

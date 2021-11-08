@@ -41,6 +41,9 @@ public class Project implements Serializable{
 
 	@Column(nullable = false)
 	private String type;// tags
+	
+	@Column(nullable = false)
+	private String main_type;// tags
 
 	@Column(name = "ticker")
 	private String ticker;

@@ -3,14 +3,18 @@ package com.buildingon.cardano.boc.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.Column;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import com.buildingon.cardano.boc.dto.Project;
+import com.buildingon.cardano.boc.dto.ProjectTypeWithProjects;
 import com.buildingon.cardano.boc.dto.ProjectViews;
 import com.buildingon.cardano.boc.repo.ProjectRepository;
 import com.buildingon.cardano.boc.repo.ProjectViewsRepository;
@@ -123,5 +127,90 @@ public class ProjectService {
 	public List<Project> getProjectsByOwnerEmail(String ownerEmail) {
 
 		return projectRepo.projectsByOwner(ownerEmail);
+	}
+	
+	public HashMap<String, List<Project>> allProjectsInTypes(){
+		
+		HashMap<String, List<Project>> projectTypesWithProjects = new HashMap<>();
+		
+		List<Project> allProjects = projectRepo.findAllVerified();
+		
+		//iterate all projects 
+		for (Project project : allProjects) {
+			String projectTypeMain = project.getType().split(" ")[0];
+			
+			//check if type exists and add project
+			if(projectTypesWithProjects.containsKey(projectTypeMain)) {
+				List<Project> projects = projectTypesWithProjects.get(projectTypeMain);
+				projects.add(project);
+			}else {
+				//create type and add project
+				List<Project> newMapList = new ArrayList<>();
+				newMapList.add(project);
+				projectTypesWithProjects.put(projectTypeMain, newMapList);
+			}
+		}
+		
+		
+		
+		
+		return projectTypesWithProjects;
+	}
+	
+	@Cacheable("allProjectsInTypesList")
+	public List<ProjectTypeWithProjects> allProjectsInTypesList(){
+		
+		List<ProjectTypeWithProjects> projectTypesWithProjects = new ArrayList<>();
+		
+		List<Project> allProjects = projectRepo.findAllVerified();
+		
+		//iterate all projects 
+		for (Project project : allProjects) {
+			String projectTypeMain = project.getMain_type();
+			
+			
+			boolean typeExistsInList = false;
+			int indexItExistsAt = 0;
+			for (int i = 0; i < projectTypesWithProjects.size(); i++) {
+				//check if type exists
+				if(projectTypesWithProjects.get(i).getProject_maintype().equalsIgnoreCase(projectTypeMain.toLowerCase())) {
+					//exists
+					typeExistsInList = true;
+					indexItExistsAt = i;
+					break;
+				}
+			}
+			
+			//check if type exists and add project
+			if(typeExistsInList) {
+				ProjectTypeWithProjects projectTypeWithProjects = projectTypesWithProjects.get(indexItExistsAt);
+				projectTypeWithProjects.getProjects().add(project);
+			}else {
+				//create type and add project
+				List<Project> newMapList = new ArrayList<>();
+				newMapList.add(project);
+				
+				ProjectTypeWithProjects projectTypeWithProjects = new ProjectTypeWithProjects();
+				projectTypeWithProjects.setProject_maintype(projectTypeMain);
+				projectTypeWithProjects.setProjects(newMapList);
+				
+				projectTypesWithProjects.add(projectTypeWithProjects);
+			}
+
+		}
+		
+		
+		//Collections.sort(projectTypesWithProjects, new CustomComparator());
+		
+		
+		return projectTypesWithProjects;
+	}
+	
+	
+	public class CustomComparator implements Comparator<ProjectTypeWithProjects> {
+	    @Override
+	    public int compare(ProjectTypeWithProjects o1, ProjectTypeWithProjects o2) {
+	        return Integer.compare(o1.getProjects().size(), o2.getProjects().size());
+	    }
 	}
 }
