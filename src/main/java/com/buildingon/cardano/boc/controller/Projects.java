@@ -60,6 +60,12 @@ public class Projects {
 
 		User valiUser = userService.validateUser(user);
 
+		try {
+			project.setMain_type(project.getTokenType().split(" ")[0]);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		if (valiUser != null) {
 			projectService.saveProject(project, project.getOwnerEmail());
 			JsonNode json = mapper.readTree("{\"response\": \"created\" }");
@@ -215,7 +221,7 @@ public class Projects {
 		projectTypes.add("Lending");
 		projectTypes.add("Launch Pad");
 		projectTypes.add("Cloud Storage");
-		
+
 		projectTypes.add("Identity");
 		projectTypes.add("Meme Coin");
 
