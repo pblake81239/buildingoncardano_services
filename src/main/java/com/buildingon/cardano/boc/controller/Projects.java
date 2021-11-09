@@ -215,6 +215,9 @@ public class Projects {
 		projectTypes.add("Lending");
 		projectTypes.add("Launch Pad");
 		projectTypes.add("Cloud Storage");
+		
+		projectTypes.add("Identity");
+		projectTypes.add("Meme Coin");
 
 		for (String type : projectTypes) {
 			DashboardStatProject dashboardStatProject = new DashboardStatProject();
