@@ -42,7 +42,7 @@ public class Project implements Serializable{
 	@Column(nullable = false)
 	private String type;// tags
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String main_type;// tags
 
 	@Column(name = "ticker")
