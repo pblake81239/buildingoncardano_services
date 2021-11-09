@@ -41,7 +41,7 @@ public class ProjectTokensBatch {
 
 	private static final Logger log = LoggerFactory.getLogger(ProjectTokensBatch.class);
 
-	@Scheduled(fixedDelay = 600000)
+	@Scheduled(fixedDelay = 600000, initialDelay = 10000)
 	public void fetchProjectTokens() {
 		log.info("getting project tokens");
 		List<Project> projectsWithToken = projectRepository.getAllProjectsWithTokensAndPolicyID();
