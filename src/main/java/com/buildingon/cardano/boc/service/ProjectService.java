@@ -118,8 +118,8 @@ public class ProjectService {
 		List<Project> projects = new ArrayList<>();
 		for (ProjectViews projectViews : mostViewed) {
 			Project response = projectRepo.projectsByName(projectViews.getProject_name());
-			if(response.getVerified().equals("true"))
-			projects.add(response);
+			if (response.getVerified().equals("true"))
+				projects.add(response);
 		}
 		return projects;
 	}
@@ -128,89 +128,91 @@ public class ProjectService {
 
 		return projectRepo.projectsByOwner(ownerEmail);
 	}
-	
-	public HashMap<String, List<Project>> allProjectsInTypes(){
-		
+
+	public HashMap<String, List<Project>> allProjectsInTypes() {
+
 		HashMap<String, List<Project>> projectTypesWithProjects = new HashMap<>();
-		
+
 		List<Project> allProjects = projectRepo.findAllVerified();
-		
-		//iterate all projects 
+
+		// iterate all projects
 		for (Project project : allProjects) {
 			String projectTypeMain = project.getType().split(" ")[0];
-			
-			//check if type exists and add project
-			if(projectTypesWithProjects.containsKey(projectTypeMain)) {
+
+			// check if type exists and add project
+			if (projectTypesWithProjects.containsKey(projectTypeMain)) {
 				List<Project> projects = projectTypesWithProjects.get(projectTypeMain);
 				projects.add(project);
-			}else {
-				//create type and add project
+			} else {
+				// create type and add project
 				List<Project> newMapList = new ArrayList<>();
 				newMapList.add(project);
 				projectTypesWithProjects.put(projectTypeMain, newMapList);
 			}
 		}
-		
-		
-		
-		
+
 		return projectTypesWithProjects;
 	}
-	
+
 	@Cacheable("allProjectsInTypesList")
-	public List<ProjectTypeWithProjects> allProjectsInTypesList(){
-		
+	public List<ProjectTypeWithProjects> allProjectsInTypesList() {
 		List<ProjectTypeWithProjects> projectTypesWithProjects = new ArrayList<>();
-		
-		List<Project> allProjects = projectRepo.findAllVerified();
-		
-		//iterate all projects 
-		for (Project project : allProjects) {
-			String projectTypeMain = project.getMain_type();
-			
-			
-			boolean typeExistsInList = false;
-			int indexItExistsAt = 0;
-			for (int i = 0; i < projectTypesWithProjects.size(); i++) {
-				//check if type exists
-				if(projectTypesWithProjects.get(i).getProject_maintype().equalsIgnoreCase(projectTypeMain.toLowerCase())) {
-					//exists
-					typeExistsInList = true;
-					indexItExistsAt = i;
+		try {
+
+			List<Project> allProjects = projectRepo.findAllVerified();
+
+			// iterate all projects
+			for (Project project : allProjects) {
+				String projectTypeMain = project.getMain_type();
+				
+				if(projectTypeMain == null) {
 					break;
 				}
-			}
-			
-			//check if type exists and add project
-			if(typeExistsInList) {
-				ProjectTypeWithProjects projectTypeWithProjects = projectTypesWithProjects.get(indexItExistsAt);
-				projectTypeWithProjects.getProjects().add(project);
-			}else {
-				//create type and add project
-				List<Project> newMapList = new ArrayList<>();
-				newMapList.add(project);
-				
-				ProjectTypeWithProjects projectTypeWithProjects = new ProjectTypeWithProjects();
-				projectTypeWithProjects.setProject_maintype(projectTypeMain);
-				projectTypeWithProjects.setProjects(newMapList);
-				
-				projectTypesWithProjects.add(projectTypeWithProjects);
+
+				boolean typeExistsInList = false;
+				int indexItExistsAt = 0;
+				for (int i = 0; i < projectTypesWithProjects.size(); i++) {
+					// check if type exists
+					if (projectTypesWithProjects.get(i).getProject_maintype()
+							.equalsIgnoreCase(projectTypeMain.toLowerCase())) {
+						// exists
+						typeExistsInList = true;
+						indexItExistsAt = i;
+						break;
+					}
+				}
+
+				// check if type exists and add project
+				if (typeExistsInList) {
+					ProjectTypeWithProjects projectTypeWithProjects = projectTypesWithProjects.get(indexItExistsAt);
+					projectTypeWithProjects.getProjects().add(project);
+				} else {
+					// create type and add project
+					List<Project> newMapList = new ArrayList<>();
+					newMapList.add(project);
+
+					ProjectTypeWithProjects projectTypeWithProjects = new ProjectTypeWithProjects();
+					projectTypeWithProjects.setProject_maintype(projectTypeMain);
+					projectTypeWithProjects.setProjects(newMapList);
+
+					projectTypesWithProjects.add(projectTypeWithProjects);
+				}
+
 			}
 
+			// Collections.sort(projectTypesWithProjects, new CustomComparator());
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		
-		//Collections.sort(projectTypesWithProjects, new CustomComparator());
-		
-		
 		return projectTypesWithProjects;
 	}
-	
-	
+
 	public class CustomComparator implements Comparator<ProjectTypeWithProjects> {
-	    @Override
-	    public int compare(ProjectTypeWithProjects o1, ProjectTypeWithProjects o2) {
-	        return Integer.compare(o1.getProjects().size(), o2.getProjects().size());
-	    }
+		@Override
+		public int compare(ProjectTypeWithProjects o1, ProjectTypeWithProjects o2) {
+			return Integer.compare(o1.getProjects().size(), o2.getProjects().size());
+		}
 	}
 }
