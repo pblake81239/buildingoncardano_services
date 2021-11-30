@@ -164,45 +164,43 @@ public class ProjectService {
 			// iterate all projects
 			for (Project project : allProjects) {
 				String projectTypeMain = project.getMain_type();
-				
-				if(projectTypeMain == null) {
-					break;
-				}
 
-				boolean typeExistsInList = false;
-				int indexItExistsAt = 0;
-				for (int i = 0; i < projectTypesWithProjects.size(); i++) {
-					// check if type exists
-					if (projectTypesWithProjects.get(i).getProject_maintype()
-							.equalsIgnoreCase(projectTypeMain.toLowerCase())) {
-						// exists
-						typeExistsInList = true;
-						indexItExistsAt = i;
-						break;
+				if (projectTypeMain != null) {
+
+					boolean typeExistsInList = false;
+					int indexItExistsAt = 0;
+					for (int i = 0; i < projectTypesWithProjects.size(); i++) {
+						// check if type exists
+						if (projectTypesWithProjects.get(i).getProject_maintype()
+								.equalsIgnoreCase(projectTypeMain.toLowerCase())) {
+							// exists
+							typeExistsInList = true;
+							indexItExistsAt = i;
+							break;
+						}
 					}
-				}
 
-				// check if type exists and add project
-				if (typeExistsInList) {
-					ProjectTypeWithProjects projectTypeWithProjects = projectTypesWithProjects.get(indexItExistsAt);
-					projectTypeWithProjects.getProjects().add(project);
-				} else {
-					// create type and add project
-					List<Project> newMapList = new ArrayList<>();
-					newMapList.add(project);
+					// check if type exists and add project
+					if (typeExistsInList) {
+						ProjectTypeWithProjects projectTypeWithProjects = projectTypesWithProjects.get(indexItExistsAt);
+						projectTypeWithProjects.getProjects().add(project);
+					} else {
+						// create type and add project
+						List<Project> newMapList = new ArrayList<>();
+						newMapList.add(project);
 
-					ProjectTypeWithProjects projectTypeWithProjects = new ProjectTypeWithProjects();
-					projectTypeWithProjects.setProject_maintype(projectTypeMain);
-					projectTypeWithProjects.setProjects(newMapList);
+						ProjectTypeWithProjects projectTypeWithProjects = new ProjectTypeWithProjects();
+						projectTypeWithProjects.setProject_maintype(projectTypeMain);
+						projectTypeWithProjects.setProjects(newMapList);
 
-					projectTypesWithProjects.add(projectTypeWithProjects);
+						projectTypesWithProjects.add(projectTypeWithProjects);
+					}
 				}
 
 			}
 
 			// Collections.sort(projectTypesWithProjects, new CustomComparator());
 
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
