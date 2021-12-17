@@ -45,20 +45,17 @@ public class ProjectTokensBatch {
 	public void fetchProjectTokens() {
 		log.info("getting project tokens");
 		List<Project> projectsWithToken = projectRepository.getAllProjectsWithTokensAndPolicyID();
+		for (Project project : projectsWithToken) {
+			try {
 
-		try {
-
-			for (Project project : projectsWithToken) {
 				String hexOfTicker = ASCIItoHEX(project.getTicker());
 				String policyId = project.getPolicyID();
 
-				
-				
 				log.info("getting token details for project: " + project.getName());
 				log.info("policyid: " + policyId);
 				log.info("hexOfTicker: " + hexOfTicker);
 
-				String koiosUrl = "https://api.koios.rest:8453/rpc/asset_info?_asset_policy=ASSETPOLICY&_asset_name_hex=ASSETNAMEHEX";
+				String koiosUrl = "https://api.koios.rest/api/v0/rpc/asset_info?_asset_policy=ASSETPOLICY&_asset_name=ASSETNAMEHEX";
 
 				koiosUrl = koiosUrl.replaceAll("ASSETPOLICY", policyId);
 				koiosUrl = koiosUrl.replaceAll("ASSETNAMEHEX", hexOfTicker);
@@ -103,9 +100,10 @@ public class ProjectTokensBatch {
 
 					projectTokenRepository.save(projectTokens);
 				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 
 	}
