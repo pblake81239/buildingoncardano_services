@@ -35,13 +35,13 @@ public class ProjectTokens {
 	private String asset_name;
 	
 	@Column(name = "total_supply")
-	private String total_supply;
+	private Double total_supply;
 	
 	@Column(name = "total_transactions")
-	private String total_transactions;
+	private Double total_transactions;
 	
 	@Column(name = "total_wallets")
-	private String total_wallets;
+	private Double total_wallets;
 	
 	@Column(name = "creation_time")
 	private String creation_time;

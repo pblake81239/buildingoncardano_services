@@ -77,9 +77,9 @@ public class ProjectTokensBatch {
 					projectTokens.setAsset_name(project.getTicker());
 
 					if (objectsKAI[0].getTotal_supply() == 0) {
-						projectTokens.setTotal_supply("0");
+						projectTokens.setTotal_supply(0.0);
 					} else {
-						projectTokens.setTotal_supply(Double.toString(objectsKAI[0].getTotal_supply()));
+						projectTokens.setTotal_supply(objectsKAI[0].getTotal_supply());
 						Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 						projectTokens.setCreation_time(formatter.format(objectsKAI[0].getCreation_time()));
@@ -101,16 +101,16 @@ public class ProjectTokensBatch {
 
 				// total trx
 				if (objects[0].getTotal_transactions() == 0) {
-					projectTokens.setTotal_transactions("0");
+					projectTokens.setTotal_transactions(0.0);
 				} else {
-					projectTokens.setTotal_transactions(Double.toString(objects[0].getTotal_transactions()));
+					projectTokens.setTotal_transactions(objects[0].getTotal_transactions());
 				}
 
 				// wallets
 				if (objects[0].getStaked_wallets() == 0) {
-					projectTokens.setTotal_wallets("0");
+					projectTokens.setTotal_wallets(0.0);
 				} else {
-					projectTokens.setTotal_wallets(Double.toString(objects[0].getStaked_wallets()));
+					projectTokens.setTotal_wallets(objects[0].getStaked_wallets());
 				}
 
 				// check if existing
