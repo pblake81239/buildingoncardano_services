@@ -1,5 +1,7 @@
 package com.buildingon.cardano.boc.batch;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -15,7 +17,8 @@ import com.buildingon.cardano.boc.BocApplication;
 import com.buildingon.cardano.boc.CacheConfiguration;
 import com.buildingon.cardano.boc.dto.Project;
 import com.buildingon.cardano.boc.dto.ProjectTokens;
-import com.buildingon.cardano.boc.pojo.KoiosAssets;
+import com.buildingon.cardano.boc.pojo.KoiosAssetInfo;
+import com.buildingon.cardano.boc.pojo.KoiosAssetSummary;
 import com.buildingon.cardano.boc.repo.ProjectRepository;
 import com.buildingon.cardano.boc.repo.ProjectTokenRepository;
 import com.buildingon.cardano.boc.service.ProjectTokensService;
@@ -48,6 +51,8 @@ public class ProjectTokensBatch {
 		for (Project project : projectsWithToken) {
 			try {
 
+				ProjectTokens projectTokens = new ProjectTokens();
+
 				String hexOfTicker = ASCIItoHEX(project.getTicker());
 				String policyId = project.getPolicyID();
 
@@ -55,51 +60,66 @@ public class ProjectTokensBatch {
 				log.info("policyid: " + policyId);
 				log.info("hexOfTicker: " + hexOfTicker);
 
-				String koiosUrl = "https://api.koios.rest/api/v0/rpc/asset_info?_asset_policy=ASSETPOLICY&_asset_name=ASSETNAMEHEX";
+				String koiosAssetInfoUrl = "https://api.koios.rest/api/v0/asset_info?_asset_policy=ASSETPOLICY&_asset_name=ASSETNAMEHEX";
 
-				koiosUrl = koiosUrl.replaceAll("ASSETPOLICY", policyId);
-				koiosUrl = koiosUrl.replaceAll("ASSETNAMEHEX", hexOfTicker);
+				koiosAssetInfoUrl = koiosAssetInfoUrl.replaceAll("ASSETPOLICY", policyId);
+				koiosAssetInfoUrl = koiosAssetInfoUrl.replaceAll("ASSETNAMEHEX", hexOfTicker);
 
-				System.out.println(koiosUrl);
+				// GET TOTAL SUPPLY
 
-				ResponseEntity<KoiosAssets[]> responseEntity = restTemplate.getForEntity(koiosUrl, KoiosAssets[].class);
-				KoiosAssets[] objects = responseEntity.getBody();
+				ResponseEntity<KoiosAssetInfo[]> responseEntityKAI = restTemplate.getForEntity(koiosAssetInfoUrl,
+						KoiosAssetInfo[].class);
+				KoiosAssetInfo[] objectsKAI = responseEntityKAI.getBody();
 
-				if (objects[0].getCreationTime() != null) {
-
-					ProjectTokens projectTokens = new ProjectTokens();
+				if (objectsKAI[0].getCreation_time() != null) {
+					projectTokens.setPolicy_id(policyId);
 					projectTokens.setProject_name(project.getName());
-					projectTokens.setAsset_name(objects[0].getAssetNameEscaped());
-					projectTokens.setCreation_time(objects[0].getCreationTime());
-					projectTokens.setPolicy_id(objects[0].getPolicyIdHex());
+					projectTokens.setAsset_name(project.getTicker());
 
-					if (objects[0].getTotalSupply() == null) {
+					if (objectsKAI[0].getTotal_supply() == 0) {
 						projectTokens.setTotal_supply("0");
 					} else {
-						projectTokens.setTotal_supply(Long.toString(objects[0].getTotalSupply()));
+						projectTokens.setTotal_supply(Double.toString(objectsKAI[0].getTotal_supply()));
+						Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+						projectTokens.setCreation_time(formatter.format(objectsKAI[0].getCreation_time()));
 					}
-
-					if (objects[0].getTotalWallets() == null) {
-						projectTokens.setTotal_wallets("0");
-					} else {
-						projectTokens.setTotal_wallets(Long.toString(objects[0].getTotalWallets()));
-					}
-
-					if (objects[0].getTotalTransactions() == null) {
-						projectTokens.setTotal_transactions("0");
-					} else {
-						projectTokens.setTotal_transactions(Long.toString(objects[0].getTotalTransactions()));
-					}
-
-					// check if existing
-					ProjectTokens existingToken = projectTokenRepository.projectsTokenByProjectName(project.getName());
-
-					if (existingToken != null) {
-						projectTokens.setId(existingToken.getId());
-					}
-
-					projectTokenRepository.save(projectTokens);
 				}
+
+				String koiosAssetSummaryUrl = "https://api.koios.rest/api/v0/asset_txs?_asset_policy=ASSETPOLICY&_asset_name=ASSETNAMEHEX";
+
+				koiosAssetSummaryUrl = koiosAssetSummaryUrl.replaceAll("ASSETPOLICY", policyId);
+				koiosAssetSummaryUrl = koiosAssetSummaryUrl.replaceAll("ASSETNAMEHEX", hexOfTicker);
+
+				System.out.println(koiosAssetSummaryUrl);
+
+				ResponseEntity<KoiosAssetSummary[]> responseEntity = restTemplate.getForEntity(koiosAssetSummaryUrl,
+						KoiosAssetSummary[].class);
+				KoiosAssetSummary[] objects = responseEntity.getBody();
+
+				projectTokens.setPolicy_id(objects[0].getPolicy_id());
+
+				// total trx
+				if (objects[0].getTotal_transactions() == 0) {
+					projectTokens.setTotal_transactions("0");
+				} else {
+					projectTokens.setTotal_transactions(Double.toString(objects[0].getTotal_transactions()));
+				}
+
+				// wallets
+				if (objects[0].getStaked_wallets() == 0) {
+					projectTokens.setTotal_wallets("0");
+				} else {
+					projectTokens.setTotal_wallets(Double.toString(objects[0].getStaked_wallets()));
+				}
+
+				// check if existing
+				ProjectTokens existingToken = projectTokenRepository.projectsTokenByProjectName(project.getName());
+				if (existingToken != null) {
+					projectTokens.setId(existingToken.getId());
+				}
+
+				projectTokenRepository.save(projectTokens);
 
 			} catch (Exception e) {
 				e.printStackTrace();

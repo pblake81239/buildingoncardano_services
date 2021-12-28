@@ -97,5 +97,5 @@ public class ResetPassword {
 	        }
 	 
 	        return sb.toString();
-	    }
+		}
 }
