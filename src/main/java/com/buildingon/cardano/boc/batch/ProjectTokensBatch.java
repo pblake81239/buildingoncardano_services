@@ -86,7 +86,7 @@ public class ProjectTokensBatch {
 					}
 				}
 
-				String koiosAssetSummaryUrl = "https://api.koios.rest/api/v0/asset_txs?_asset_policy=ASSETPOLICY&_asset_name=ASSETNAMEHEX";
+				String koiosAssetSummaryUrl = "https://api.koios.rest/api/v0/asset_summary?_asset_policy=ASSETPOLICY&_asset_name=ASSETNAMEHEX";
 
 				koiosAssetSummaryUrl = koiosAssetSummaryUrl.replaceAll("ASSETPOLICY", policyId);
 				koiosAssetSummaryUrl = koiosAssetSummaryUrl.replaceAll("ASSETNAMEHEX", hexOfTicker);
