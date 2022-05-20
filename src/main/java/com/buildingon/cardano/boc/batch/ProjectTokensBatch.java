@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.client.RestTemplate;
 
@@ -44,12 +45,17 @@ public class ProjectTokensBatch {
 
 	private static final Logger log = LoggerFactory.getLogger(ProjectTokensBatch.class);
 
-	@Scheduled(fixedDelay = 600000, initialDelay = 10000)
+	@Async
+	@Scheduled(fixedDelay = 30000000, initialDelay = 10000)
 	public void fetchProjectTokens() {
 		log.info("getting project tokens");
 		List<Project> projectsWithToken = projectRepository.getAllProjectsWithTokensAndPolicyID();
 		for (Project project : projectsWithToken) {
 			try {
+				
+				if(project.getProjectTeam().equals("DripDropz")) {
+					System.out.println("break");
+				}
 
 				ProjectTokens projectTokens = new ProjectTokens();
 
@@ -57,6 +63,11 @@ public class ProjectTokensBatch {
 				String policyId = project.getPolicyID();
 
 				log.info("getting token details for project: " + project.getName());
+				
+				if(project.getName().equals("KubeCoin")) {
+					System.out.println("hi");
+				}
+				
 				log.info("policyid: " + policyId);
 				log.info("hexOfTicker: " + hexOfTicker);
 
@@ -65,6 +76,7 @@ public class ProjectTokensBatch {
 				koiosAssetInfoUrl = koiosAssetInfoUrl.replaceAll("ASSETPOLICY", policyId);
 				koiosAssetInfoUrl = koiosAssetInfoUrl.replaceAll("ASSETNAMEHEX", hexOfTicker);
 
+				System.out.println(koiosAssetInfoUrl);
 				// GET TOTAL SUPPLY
 
 				ResponseEntity<KoiosAssetInfo[]> responseEntityKAI = restTemplate.getForEntity(koiosAssetInfoUrl,
@@ -125,6 +137,7 @@ public class ProjectTokensBatch {
 				e.printStackTrace();
 			}
 		}
+		log.info("getting project tokens COMPLETE");
 
 	}
 
